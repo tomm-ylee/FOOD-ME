@@ -1,43 +1,36 @@
 // Update with your config settings.
 
-module.exports = {
+const sharedConfig = {
+  client: 'pg',
+  pool: {
+    min: 2,
+    max: 10
+  },
+  migrations: {
+    tableName: 'knex_migrations',
+    directory: './db/migrations'
+  }
+};
 
+module.exports = {
   development: {
-    client: 'sqlite3',
+    ...sharedConfig,
     connection: {
-      filename: './dev.sqlite3'
+      database: 'meal_planner_dev'
     }
   },
 
   staging: {
-    client: 'postgresql',
+    ...sharedConfig,
     connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
+      database: 'meal_planner_staging'
     }
   },
 
   production: {
-    client: 'postgresql',
+    ...sharedConfig,
     connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
+      database: 'meal_planner_production'
     }
   }
 
