@@ -2,7 +2,7 @@ const knex = require('../db/knex');
 const express = require('express');
 const router = express.Router();
 
-// PATH: /recipes ACTION: INDEX
+// PATH: /users ACTION: INDEX
 router.get('/', function(req, res, next) {
   knex
     .select()
@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
     })
 });
 
-// PATH: /recipes/:id ACTION: SHOW
+// PATH: /users/:id ACTION: SHOW
 router.get('/:id', function(req, res, next) {
   const userId = req.params.id;
 
@@ -26,7 +26,7 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
-// PATH: /recipes ACTION: CREATE
+// PATH: /users ACTION: CREATE
 router.post('/', function(req, res, next) {
   const { email, username, admin, guest } = req.body
 
