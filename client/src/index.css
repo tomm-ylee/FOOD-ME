@@ -3,3 +3,20 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+#homepage-background {
+  display: flex;
+  padding: none;
+  background-image: url('./images/cropped-food-background.jpg');
+  background-size: cover;
+  justify-content: flex-end;
+}
+
+#signin-jumbotron {
+  display: flex;
+  flex-direction: column;
+  margin: 0 100px;
+  width: 300px;
+  height:100vh;
+  font-family: serif;
+}

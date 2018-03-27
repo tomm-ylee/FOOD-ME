@@ -36,10 +36,10 @@ router.get('/:id', function(req, res, next) {
 
 // PATH: /ingredients ACTION: CREATE
 router.post('/', function(req, res, next) {
-  const { name, meat } = req.body
+  const { name, meat, non_key } = req.body
 
   knex
-    .insert({ name, meat})
+    .insert({ name, meat, non_key })
     .into('ingredients')
     .returning('*')
     .then(ingredient => {

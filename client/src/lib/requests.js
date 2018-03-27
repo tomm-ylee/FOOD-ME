@@ -1,5 +1,9 @@
 const DOMAIN = 'http://localhost:9000';
 
+function getJWT() {
+  return localStorage.getItem('jwt');
+}
+
 const User = {
   all() {
     return fetch(
@@ -8,4 +12,19 @@ const User = {
   }
 }
 
-export { User };
+const Token = {
+  create (params) {
+    return fetch(
+      `${DOMAIN}/tokens`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      }
+    ).then(res => res.json())
+  }
+}
+
+export { User, Token };
