@@ -4,7 +4,7 @@ body {
   font-family: sans-serif;
 }
 
-#homepage-background {
+main.HomePage > .backgroundDiv {
   display: flex;
   padding: none;
   background-image: url('./images/cropped-food-background.jpg');
@@ -19,4 +19,44 @@ body {
   width: 300px;
   height:100vh;
   font-family: serif;
+}
+
+.recipeCardList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recipeCard {
+  max-width: 350px;
+}
+
+.recipeCard img {
+  width: 350px;
+  height: auto
+}
+
+.ingredientItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.ingredientItems > .quantity{
+  width: 2em;
+}
+
+.ingredientItems > .unit{
+  width: 5em;
+}
+
+.backgroundDiv {
+  background-color: palegreen;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.content {
+  background-color: white;
+  margin: 0 300px;
+  padding: 20px;
 }

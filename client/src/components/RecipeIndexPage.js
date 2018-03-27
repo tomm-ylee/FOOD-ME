@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import {
+  Card, CardGroup, CardImg, CardText, CardBody, CardTitle, Button
+} from 'reactstrap'
 
-// import recipeData from '../recipeData';
 import { Recipe } from '../lib/requests';
 
 class RecipeIndexPage extends React.Component {
@@ -14,7 +15,6 @@ class RecipeIndexPage extends React.Component {
       loading: true
     }
 
-    this.deleteRecipe = this.deleteRecipe.bind(this)
     this.addRecipe = this.addRecipe.bind(this)
   }
 
@@ -24,23 +24,9 @@ class RecipeIndexPage extends React.Component {
     })
   }
 
-  deleteRecipe (event) {
-    const {currentTarget} = event;
-
-    const {recipes} = this.state;
-    const recipeId = parseInt(currentTarget.dataset.id, 10);
-    // To delete a recipe, will have to update the state
-    // to version of state where that recipe is no longer
-    // present.
-    this.setState({
-      recipes: recipes.filter(recipe => recipe.id !== recipeId)
-    })
-  }
-
   addRecipe (newRecipe) {
     const {recipes} = this.state;
 
-    newRecipe.author = {'full_name': 'Dr.Zoidberg'}
     this.setState({
       recipes: [
         newRecipe,
@@ -56,41 +42,38 @@ class RecipeIndexPage extends React.Component {
           className="RecipeIndexPage"
           style={{margin: '0 1rem'}}
         >
-          <h2>Recipes</h2>
-          <h4>Loading...</h4>
+          <p>loading..</p>
+        </main>
+      )
+    } else {
+      return (
+        <main
+          className="RecipeIndexPage"
+          style={{margin: '0 1rem'}}
+        >
+          <div className="recipeCardList container-fluid">
+            {
+              this.state.recipes.map(
+                recipe => (
+                  <Card className="recipeCard" key={recipe.id}>
+                    <Link to={`/recipes/${recipe.id}`}>
+                      <CardImg top width="100%" src={require('../images/spaghetti.jpg')} />
+                    </Link>
+                    <CardBody>
+                      <CardTitle>{recipe.title}</CardTitle>
+                      <CardText>{recipe.description}</CardText>
+                      <CardText>
+                        Key Ingredients: {/* recipe.usages.filter( ingredient => ingredient.key_ingredient).join(',') */}
+                      </CardText>
+                    </CardBody>
+                  </Card>
+                )
+              )
+            }
+          </div>
         </main>
       )
     }
-
-    return (
-      <main
-        className="RecipeIndexPage"
-        style={{margin: '0 1rem'}}
-      >
-        <h2>Recipes</h2>
-
-        <ul>
-          {
-            this.state.recipes.map(
-              recipe => (
-                <li key={recipe.id}>
-                  <Link to={`/recipes/${recipe.id}`}>
-                    {recipe.title}
-                  </Link>
-                  <Field name="Author" value={recipe.author.full_name} />
-                  <button
-                    data-id={recipe.id}
-                    onClick={this.deleteRecipe}
-                  >
-                    Delete
-                  </button>
-                </li>
-              )
-            )
-          }
-        </ul>
-      </main>
-    )
   }
 }
 

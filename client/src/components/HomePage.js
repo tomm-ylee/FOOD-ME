@@ -47,7 +47,7 @@ class HomePage extends Component {
         className="HomePage"
         style={{margin: '0 1rem'}}
       >
-        <div id="homepage-background">
+        <div className="backgroundDiv">
           <Jumbotron
             id="signin-jumbotron"
             style={{width: '500px', height: '100vh'}}
