@@ -37,9 +37,9 @@ class App extends Component {
     //     user: payload
     //   });
     // }
-    const user = localStorage.getItem('user');
+    const user_id = localStorage.getItem('user');
 
-    if (user) {
+    if (user_id) {
       this.setState({ user: user_id })
     }
   }
