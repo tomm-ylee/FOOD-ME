@@ -9,10 +9,9 @@ const cors = require('cors');
 // RESOURCE ROUTES REQUIREMENT
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const tokensRouter = require('./routes/tokens');
 const recipesRouter = require('./routes/recipes');
 const ingredientsRouter = require('./routes/ingredients');
-// const commentsRouter = require('./routes/comments');
-// const usagesRouter = require('./routes/usages');
 // const ownagesRouter = require('./routes/ownages');
 
 // MIDDLEWARE SETUP
@@ -31,10 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ROUTE REDIRECTIONS
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/tokens', tokensRouter);
 app.use('/recipes', recipesRouter);
 app.use('/ingredients', ingredientsRouter);
-// app.use('/comments', commentsRouter);
-// app.use('/usages', usagesRouter);
 // app.use('/ownages', ownagesRouter);
 
 // catch 404 and forward to error handler

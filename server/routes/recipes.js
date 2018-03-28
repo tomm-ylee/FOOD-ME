@@ -2,6 +2,14 @@ const knex = require('../db/knex');
 const express = require('express');
 const router = express.Router();
 
+// RESOURCE ROUTES REQUIREMENT
+const commentsRouter = require('./comments');
+// MIDDLEWARE SETUP
+const app = express();
+
+// ROUTE REDIRECTIONS
+app.use('/:id/comments', commentsRouter);
+
 // PATH: /recipes ACTION: INDEX
 router.get('/', function(req, res, next) {
   knex

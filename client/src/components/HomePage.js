@@ -24,11 +24,9 @@ class HomePage extends Component {
     Token.create(logInParams)
       .then(data => {
         if (!data.errors) {
-          localStorage.setItem('jwt', data.jwt);
+          // localStorage.setItem('jwt', data.jwt);
+          localStorage.setItem('user', data.id );
           onSignIn()
-          // .history is only available on props because this component is
-          // rendered by a route component.
-          // (i.e. <Route route="/sign_in" component={HomePage} />)
           this.props.history.push('/');
         } else {
           this.setState({
@@ -51,7 +49,6 @@ class HomePage extends Component {
             id="signin-jumbotron"
           >
             <h1 className="display-3 homeTitle">FOOD-ME</h1>
-            {/* <p className="lead">This is a simple hero unit, a simple Jumbotron-style component for calling extra attention to featured content or information.</p> */}
             <hr/>
 
             <SignIn onSubmit={this.createToken} />

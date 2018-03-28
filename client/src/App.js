@@ -16,32 +16,36 @@ import RecipeShowPage from './components/RecipeShowPage';
 class App extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   users: null
-    // }
-    //
-    // this.signIn = this.signIn.bind(this);
+    this.state = {
+      users: null
+    }
+
+    this.signIn = this.signIn.bind(this);
     // this.signOut = this.signOut.bind(this);
-    console.log(this.props);
   }
 
   componentDidMount() {
-    // this.signIn();
+    this.signIn();
   }
 
-  // signIn() {
-  //   const jwt = localStorage.getItem('jwt');
-  //
-  //   if (jwt) {
-  //     const payload = jwtDecode(jwt);
-  //     this.setState({
-  //       user: payload
-  //     });
-  //   }
-  // }
-  // isSignedIn() {
-  //   return !!this.state.user;
-  // }
+  signIn() {
+    // const jwt = localStorage.getItem('jwt');
+    //
+    // if (jwt) {
+    //   const payload = jwtDecode(jwt);
+    //   this.setState({
+    //     user: payload
+    //   });
+    // }
+    const user = localStorage.getItem('user');
+
+    if (user) {
+      this.setState({ user: user_id })
+    }
+  }
+  isSignedIn() {
+    return !!this.state.user;
+  }
   //
   // signOut() {
   //   localStorage.removeItem('jwt');

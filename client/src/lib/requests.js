@@ -48,6 +48,18 @@ const User = {
     return fetch(
       `${DOMAIN}/users`
     ).then(res => res.json())
+  },
+  signIn(params) {
+    return fetch(
+      `${DOMAIN}/users/signIn`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      }
+    ).then(res => res.json())
   }
 }
 
