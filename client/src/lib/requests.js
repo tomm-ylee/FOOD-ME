@@ -14,7 +14,10 @@ const Recipe = {
         // }
       }
     )
-      .then(res => res.json());
+      .then(res => {
+        console.log(res);
+        res.json()
+      });
   },
   one (id) {
     return fetch(

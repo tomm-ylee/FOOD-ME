@@ -19,7 +19,8 @@ class RecipeSearchPage extends React.Component {
   componentDidMount() {
     const { searchPhrase } = this.state
     Recipe.search(searchPhrase).then(recipes => {
-      this.setState({ recipes: recipes, loading: false })
+      console.log(recipes);
+      this.setState({ recipes: recipes, loading: true })
     })
   }
 
