@@ -1,5 +1,111 @@
+@import url('https://fonts.googleapis.com/css?family=Bitter');
+* {
+  box-sizing: content-box;
+}
+
+.homeTitle {
+  align-self: center;
+  border-radius: 6px;
+  padding: 10px 10px;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+main.HomePage > .backgroundDiv {
+  display: flex;
+  padding: none;
+  background-image: url('./images/cropped-food-background.jpg');
+  background-size: cover;
+  justify-content: flex-end;
+}
+
+#signin-jumbotron {
+  display: flex;
+  flex-direction: column;
+  margin: 0 100px;
+  width: 450px;
+  height:95vh;
+  font-family: 'Bitter';
+}
+
+.recipeCardList.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+
+.recipeCard {
+  max-width: 350px;
+  margin: 15px;
+  border: #795548 solid 3px
+}
+
+.recipeCard img {
+  width: 350px;
+  height: auto
+}
+
+.ingredientItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.ingredientItems > .quantity{
+  width: 2em;
+}
+
+.ingredientItems > .unit{
+  width: 8em;
+}
+
+.backgroundDiv {
+  background-image: url('./images/content_background.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.content {
+  background-color: white;
+  margin: 0 300px;
+  padding: 20px;
+}
+.recipeImage {
+  max-width: 100%;
+  height: auto;
+}
+
+form input, textarea, .ratingInput {
+  width: 100%;
+  border-radius: 4px;
+  border-style: inset;
+  border-width: 2px;
+  resize: none;
+}
+
+a {
+  color: #282828;
+}
+
+.NavBar {
+  display: flex;
+  background-color: black;
+  color: white;
+}
+
+.NavBar > * {
+  padding: 0.50em 1em;
+  color: inherit;
+  text-decoration: none;
+}
+
+.showHeader {
+  margin-top: 50px;
 }
