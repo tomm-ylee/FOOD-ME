@@ -40,6 +40,16 @@ const Recipe = {
       }
     )
       .then(res => res.json())
+  },
+  search(searchPhrase) {
+    return fetch(
+      `${DOMAIN}/recipes/search/${searchPhrase}`,
+      {}
+    )
+      .then(res => {
+        console.log("res", res);
+        res.json()
+      })
   }
 }
 
@@ -49,9 +59,9 @@ const User = {
       `${DOMAIN}/users`
     ).then(res => res.json())
   },
-  signIn(params) {
+  create(params) {
     return fetch(
-      `${DOMAIN}/users/signIn`,
+      `${DOMAIN}/users`,
       {
         method: 'POST',
         headers: {
@@ -64,7 +74,7 @@ const User = {
 }
 
 const Token = {
-  create (params) {
+  create(params) {
     return fetch(
       `${DOMAIN}/tokens`,
       {

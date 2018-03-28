@@ -28,15 +28,18 @@ router.get('/:id', function(req, res, next) {
 
 // PATH: /users ACTION: CREATE
 router.post('/', function(req, res, next) {
-  const { email, username, admin, guest } = req.body
-
-  knex
-    .insert({ email, username, admin, guest })
+  const { email, password, password_confirmation } = req.body
+  if (email.length > 0) {
+    knex
+    .insert({ email })
     .into('users')
     .returning('*')
     .then(user => {
       res.json(user);
     })
+  } else {
+    res.json({errors: "Invalid Sign Up"})
+  }
 });
 
 module.exports = router;

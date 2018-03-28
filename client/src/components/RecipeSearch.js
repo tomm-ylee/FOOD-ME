@@ -6,16 +6,15 @@ function RecipeSearch(props) {
     const handleSubmit = event => {
       event.preventDefault();
       const formData = new FormData(event.currentTarget);
-      
+
       props.onSubmit({
-        searchWord: formData.get('searchWord')
+        searchPhrase: formData.get('searchPhrase').replace(/ /g, "%20")
       })
     }
   return (
     <Form onSubmit={handleSubmit}>
       <FormGroup>
-        <Label for='searchWord'>Already Have a Dish In Mind?</Label>
-        <input type='searchWord' id='searchWord' name='searchWord' placeholder='Search for any dish'/>
+        <input type='searchPhrase' id='searchPhrase' name='searchPhrase' placeholder='Search for any dish'/>
       </FormGroup>
 
     </Form>
