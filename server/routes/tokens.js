@@ -14,6 +14,9 @@ router.post('/', function(req, res, next) {
     .where({email: email})
     .then(user => {
       res.json(user);
+    })
+    .catch(err => {
+      res.json({error: "Invalid Sign In"})
     });
 });
 

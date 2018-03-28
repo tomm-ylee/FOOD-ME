@@ -17,7 +17,7 @@ API_KEY = "a6c0a0d863187bd15f40a0f7ecf370b0";
 router.get('/', function(req, res, next) {
   console.log("Index");
   knex.select().from('recipes').orderBy('created_at', 'DESC').then(recipes => {
-    res.json(recipes);
+    res.json({recipes});
   })
 });
 

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Jumbotron } from 'reactstrap'
 
 // Import Requests
-import { Token, User } from '../lib/requests';
+import { Token, User, Recipe } from '../lib/requests';
 
 // Import Component Files
 import SignIn from './SignIn'
@@ -75,7 +75,8 @@ class HomePage extends Component {
   }
 
   searchRecipe(params) {
-    console.log(params.searchWord);
+    const { searchPhrase } = params;
+    this.props.history.push(`/search/${searchPhrase}`)
   }
 
   render() {
@@ -89,7 +90,7 @@ class HomePage extends Component {
             id="signin-jumbotron"
           >
             <h1 className="display-3 homeTitle">FOOD-ME</h1>
-
+            <p>Already Have a Dish In Mind?</p>
             <RecipeSearch onSubmit={this.searchRecipe} />
             <hr/>
             { form === "signIn" ? <SignIn signUpClick={this.toSignUp} onSubmit={this.createToken} /> : null }

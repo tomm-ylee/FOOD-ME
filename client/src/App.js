@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import jwtDecode from 'jwt-decode';
 
 // Import Requests
-import { User } from './lib/requests'
+import {  } from './lib/requests'
 
 // Import Component Files
 import NavBar from './components/NavBar';
@@ -12,6 +12,7 @@ import HomePage from './components/HomePage';
 import NotFoundPage from './components/NotFoundPage';
 import RecipeIndexPage from './components/RecipeIndexPage';
 import RecipeShowPage from './components/RecipeShowPage';
+import RecipeSearchPage from './components/RecipeSearchPage';
 
 class App extends Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class App extends Component {
             <Route exact path="/" component={HomePage} />
             <Route exact path="/recipes" component={RecipeIndexPage} />
             <Route path="/recipes/:id" component={RecipeShowPage} />
+            <Route path="/search/:search" component={RecipeSearchPage} />
 
             <Route component={NotFoundPage} />
           </Switch>
