@@ -35,31 +35,31 @@ router.get('/search/:search', function(req, res, next) {
 
 // PATH: /recipes/:id ACTION: SHOW
 
-// router.get('/:id', function(req, res, next) {
-//   const recipeId = req.params.id;
-//
-//   knex.first().from('recipes').where({ id: recipeId }).then(recipe => {
-//     return Promise.all([
-//       knex.select().from('directions').where({ recipe_id: recipeId }).orderBy('step_number', 'ASC').then(directions => {
-//         recipe.directions = directions;
-//       }),
-//       knex.select().from('usages').where({ recipe_id: recipeId }).then(usages => {
-//         recipe.usages = usages;
-//       })
-//     ])
-//       .then(() => res.json(recipe))
-//   })
-// });
 router.get('/:id', function(req, res, next) {
   const recipeId = req.params.id;
-  console.log("This is in the show action");
-  request(
-    `${FOOD2FOOK_DOMAIN}/get?key=${API_KEY}&rId=${recipeId}`,
-    (err, apiResponse, data) => {
-      res.send(apiResponse.body)
-    }
-  )
+
+  knex.first().from('recipes').where({ id: recipeId }).then(recipe => {
+    return Promise.all([
+      knex.select().from('directions').where({ recipe_id: recipeId }).orderBy('step_number', 'ASC').then(directions => {
+        recipe.directions = directions;
+      }),
+      knex.select().from('usages').where({ recipe_id: recipeId }).then(usages => {
+        recipe.usages = usages;
+      })
+    ])
+      .then(() => res.json(recipe))
+  })
 });
+// router.get('/:id', function(req, res, next) {
+//   const recipeId = req.params.id;
+//   console.log("This is in the show action");
+//   request(
+//     `${FOOD2FOOK_DOMAIN}/get?key=${API_KEY}&rId=${recipeId}`,
+//     (err, apiResponse, data) => {
+//       res.send(apiResponse.body)
+//     }
+//   )
+// });
 
 // PATH: /recipes ACTION: CREATE
 router.post('/', function(req, res, next) {
