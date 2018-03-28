@@ -22,7 +22,7 @@ class App extends Component {
     //
     // this.signIn = this.signIn.bind(this);
     // this.signOut = this.signOut.bind(this);
-
+    console.log(this.props);
   }
 
   componentDidMount() {
@@ -52,7 +52,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-
+          <NavBar />
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/recipes" component={RecipeIndexPage} />

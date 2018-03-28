@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Bitter');
+* {
+  box-sizing: content-box;
+}
+
+.homeTitle {
+  align-self: center;
+  border-radius: 6px;
+  padding: 10px 10px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -16,18 +27,22 @@ main.HomePage > .backgroundDiv {
   display: flex;
   flex-direction: column;
   margin: 0 100px;
-  width: 300px;
-  height:100vh;
-  font-family: serif;
+  width: 450px;
+  height:95vh;
+  font-family: 'Bitter';
 }
 
-.recipeCardList {
+.recipeCardList.content {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
 }
 
 .recipeCard {
   max-width: 350px;
+  margin: 15px;
+  border: #795548 solid 3px
 }
 
 .recipeCard img {
@@ -46,17 +61,51 @@ main.HomePage > .backgroundDiv {
 }
 
 .ingredientItems > .unit{
-  width: 5em;
+  width: 8em;
 }
 
 .backgroundDiv {
-  background-color: palegreen;
+  background-image: url('./images/content_background.jpg');
+  background-size: cover;
+  background-attachment: fixed;
   min-height: 100vh;
-  padding: 20px;
+  padding: 0;
 }
 
 .content {
   background-color: white;
   margin: 0 300px;
   padding: 20px;
+}
+.recipeImage {
+  max-width: 100%;
+  height: auto;
+}
+
+form input, textarea, .ratingInput {
+  width: 100%;
+  border-radius: 4px;
+  border-style: inset;
+  border-width: 2px;
+  resize: none;
+}
+
+a {
+  color: #282828;
+}
+
+.NavBar {
+  display: flex;
+  background-color: black;
+  color: white;
+}
+
+.NavBar > * {
+  padding: 0.50em 1em;
+  color: inherit;
+  text-decoration: none;
+}
+
+.showHeader {
+  margin-top: 50px;
 }

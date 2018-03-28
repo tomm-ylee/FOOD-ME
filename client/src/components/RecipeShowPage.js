@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, ListGroupItem, Row, Col } from 'reactstrap'
+import { ListGroup, ListGroupItem, Form, FormGroup, Label, Button, Input } from 'reactstrap'
 
 import { Recipe } from '../lib/requests';
 
@@ -9,8 +9,10 @@ class RecipeShowPage extends React.Component {
 
     this.state = {
       recipe: [],
+      comments: [0],
       loading: true
     }
+    this.handleSubmit = this.handleSubmit.bind('this');
   }
 
   componentDidMount() {
@@ -21,17 +23,21 @@ class RecipeShowPage extends React.Component {
     })
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+
+  }
+
   render() {
-    const { loading, recipe } = this.state
+    const { loading, comments, recipe } = this.state
     const { directions, usages } = recipe
 
-    console.log(directions);
-    console.log(usages);
     if (loading) {
       return (
         <main
           className="RecipeShowPage containerFluid"
-          style={{margin: '0 1rem'}}
         >
           <p>loading..</p>
         </main>
@@ -40,14 +46,13 @@ class RecipeShowPage extends React.Component {
       return (
         <main
           className="RecipeShowPage"
-          style={{margin: '0 1rem'}}
         >
           <div className="backgroundDiv">
             <div className="content">
               <h2>{recipe.title}</h2>
-              <img src={require('../images/spaghetti.jpg')} />
+              <img className="recipeImage" src={require('../images/spaghetti.jpg')} />
               <p>{recipe.description}</p>
-
+              <p><em>(Duration: {recipe.duration} minutes)</em></p>
               <ListGroup className="viewRecipeList">
                 {
                   usages.map( (ingredient, i) => (
@@ -59,13 +64,13 @@ class RecipeShowPage extends React.Component {
                         {ingredient.unit}
                       </div>
                       <div className="ingredient_name">
-                        <strong>{ingredient.ingredient_name}</strong>
+                        {ingredient.ingredient_name}
                       </div>
                     </ListGroupItem>
                   ))
                 }
               </ListGroup>
-
+              <h4 className="showHeader">Methods</h4>
               <ListGroup className="viewRecipeList">
                 {
                   directions.map( (direction) => (
@@ -75,8 +80,35 @@ class RecipeShowPage extends React.Component {
                   ))
                 }
               </ListGroup>
+              <h4 className="showHeader">Comments</h4>
+              <ListGroup className="viewRecipeList">
+                {
+                  comments.map( (comment, i) => (
+                    <ListGroupItem key={i} className="commentItem">
+                      <div><strong>FamilyDad</strong> wrote: </div>
+                      <div>This was such a good meal!! 5/5 Rating </div>
+                    </ListGroupItem>
+                  ))
+                }
+              </ListGroup>
 
+              <Form onSubmit={this.handleSubmit}>
+                <Label for='body'><h5 className="showHeader">Add Comment</h5></Label> <br />
+                <FormGroup>
+                    <Input className="ratingInput" type="select" name="rating" id="rating" style={{width: '50px'}}>
+                    <option>5</option>
+                    <option>4</option>
+                    <option>3</option>
+                    <option>2</option>
+                    <option>1</option>
+                  </Input>
+                </FormGroup>
+                <FormGroup>
 
+                  <textarea className="commentInput"name='body'/>
+                </FormGroup>
+                <Button>Add Comment</Button>
+              </Form>
             </div>
           </div>
         </main>

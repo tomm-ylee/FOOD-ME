@@ -49,27 +49,28 @@ class RecipeIndexPage extends React.Component {
       return (
         <main
           className="RecipeIndexPage"
-          style={{margin: '0 1rem'}}
         >
-          <div className="recipeCardList container-fluid">
-            {
-              this.state.recipes.map(
-                recipe => (
-                  <Card className="recipeCard" key={recipe.id}>
-                    <Link to={`/recipes/${recipe.id}`}>
-                      <CardImg top width="100%" src={require('../images/spaghetti.jpg')} />
-                    </Link>
-                    <CardBody>
-                      <CardTitle>{recipe.title}</CardTitle>
-                      <CardText>{recipe.description}</CardText>
-                      <CardText>
-                        Key Ingredients: {/* recipe.usages.filter( ingredient => ingredient.key_ingredient).join(',') */}
-                      </CardText>
-                    </CardBody>
-                  </Card>
+          <div className="backgroundDiv">
+            <div className="content recipeCardList">
+              {
+                this.state.recipes.map(
+                  recipe => (
+                    <Card className="recipeCard" key={recipe.id}>
+                      <Link to={`/recipes/${recipe.id}`}>
+                        <CardImg top width="100%" src={require('../images/spaghetti.jpg')} />
+                      </Link>
+                      <CardBody>
+                        <CardTitle>{recipe.title}</CardTitle>
+                        <CardText>{recipe.description}</CardText>
+                        <CardText>
+                          Key Ingredients: {/* recipe.usages.filter( ingredient => ingredient.key_ingredient).join(',') */}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  )
                 )
-              )
-            }
+              }
+              </div>
           </div>
         </main>
       )
