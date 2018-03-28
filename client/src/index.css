@@ -42,7 +42,7 @@ main.HomePage > .backgroundDiv {
 .recipeCard {
   max-width: 350px;
   margin: 15px;
-  border: #795548 solid 3px
+  border: none;
 }
 
 .recipeCard img {
@@ -108,4 +108,8 @@ a {
 
 .showHeader {
   margin-top: 50px;
+}
+
+#homeSearch {
+  margin-bottom: 200px;
 }
