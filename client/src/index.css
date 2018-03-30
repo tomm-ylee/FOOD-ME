@@ -32,7 +32,7 @@ main.HomePage > .backgroundDiv {
   font-family: 'Bitter';
 }
 
-.recipeCardList.content {
+.recipeCardList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

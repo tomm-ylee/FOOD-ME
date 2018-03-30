@@ -5,6 +5,7 @@ import {
 } from 'reactstrap'
 
 import { Recipe } from '../lib/requests';
+import RecipeSearch from './RecipeSearch';
 
 class RecipeSearchPage extends React.Component {
   constructor (props) {
@@ -14,14 +15,21 @@ class RecipeSearchPage extends React.Component {
       searchPhrase: this.props.match.params.search,
       loading: true
     }
+
+    this.searchRecipe = this.searchRecipe.bind('this')
   }
 
   componentDidMount() {
     const { searchPhrase } = this.state
-    Recipe.search(searchPhrase).then(recipes => {
-      console.log(recipes);
-      this.setState({ recipes: recipes, loading: true })
+
+    Recipe.search(searchPhrase).then(data => {
+      this.setState({ recipes: data.recipes, loading: false })
     })
+  }
+
+  searchRecipe(params) {
+    const { searchPhrase } = params;
+    this.props.history.push(`/search/${searchPhrase}`)
   }
 
   render() {
@@ -40,7 +48,10 @@ class RecipeSearchPage extends React.Component {
           className="RecipeSearchPage"
         >
           <div className="backgroundDiv">
-            <div className="content recipeCardList">
+            <div className="content">
+              <RecipeSearch onSubmit={this.searchRecipe} />
+              <br/>
+              <div className="recipeCardList">
               {
                 this.state.recipes.map(
                   recipe => (
@@ -56,6 +67,7 @@ class RecipeSearchPage extends React.Component {
                 )
               }
               </div>
+            </div>
           </div>
         </main>
       )

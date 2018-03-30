@@ -4,8 +4,26 @@ function getJWT() {
   return localStorage.getItem('jwt');
 }
 
+const Ingredient = {
+  all() {
+    return fetch(
+      `${DOMAIN}/ingredients`, {}
+    )
+      .then(res => res.json())
+  }
+}
+
+const Ownage = {
+  all(user_id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/ownages`, {}
+    )
+      .then(res => res.json())
+  }
+}
+
 const Recipe = {
-  all () {
+  all() {
     return fetch(
       `${DOMAIN}/recipes`,
       {
@@ -14,12 +32,9 @@ const Recipe = {
         // }
       }
     )
-      .then(res => {
-        console.log(res);
-        res.json()
-      });
+      .then(res => res.json())
   },
-  one (id) {
+  one(id) {
     return fetch(
       `${DOMAIN}/recipes/${id}`,
       {
@@ -30,7 +45,7 @@ const Recipe = {
     )
       .then(res => res.json());
   },
-  create (params) {
+  create(params) {
     return fetch(
       `${DOMAIN}/recipes`,
       {
@@ -49,9 +64,7 @@ const Recipe = {
       `${DOMAIN}/recipes/search/${searchPhrase}`,
       {}
     )
-      .then(res => {
-        res.json()
-      })
+      .then(res => res.json())
   }
 }
 
@@ -72,6 +85,11 @@ const User = {
         body: JSON.stringify(params)
       }
     ).then(res => res.json())
+  },
+  usages(params) {
+    return fetch(
+      `${DOMAIN}/users/usages`, {}
+    ).then(res => res.json())
   }
 }
 
@@ -90,4 +108,5 @@ const Token = {
   }
 }
 
-export { Recipe, User, Token };
+
+export { Recipe, User, Token, Ingredient, Ownage };

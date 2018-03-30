@@ -11,23 +11,25 @@ const app = express();
 // ROUTE REDIRECTIONS
 // app.use('/:id/comments', commentsRouter);
 
-FOOD2FOOK_DOMAIN = "http://food2fork.com/api/"
+FOOD2FOOK_DOMAIN = "http://food2fork.com/api"
 API_KEY = "a6c0a0d863187bd15f40a0f7ecf370b0";
 // PATH: /recipes ACTION: INDEX
 router.get('/', function(req, res, next) {
   console.log("Index");
   knex.select().from('recipes').orderBy('created_at', 'DESC').then(recipes => {
-    res.json({recipes});
+    res.json(recipes);
   })
 });
 
 // PATH: /recipes ACTION: SEARCH
-router.get('/search/:search', function(req, res, next) {
-  console.log("Search");
-  const search = req.params.search
+router.get('/search/:searchPhrase', function(req, res, next) {
+  const searchPhrase = req.params.searchPhrase
+  // const SearchURL = `${FOOD2FOOK_DOMAIN}/search?key=${API_KEY}&q=${searchPhrase}`
+  // console.log(SearchURL);
   request(
-    `${FOOD2FOOK_DOMAIN}/search?key=${API_KEY}&q=${search}`, // Use %20 for space, and use "," to separate ingredients
+    `${FOOD2FOOK_DOMAIN}/search?key=${API_KEY}&q=${searchPhrase}`, // Use %20 for space, and use "," to separate ingredients
     (err, apiResponse, data) => {
+      console.log(apiResponse.body);
       res.send(apiResponse.body)
     }
   )

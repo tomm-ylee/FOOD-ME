@@ -1,16 +1,22 @@
 const knex = require('../db/knex');
 const express = require('express');
 const router = express.Router();
+const { vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits } = require('../assets/ingredients')
 
 // PATH: /ingredients ACTION: INDEX
+// router.get('/', function(req, res, next) {
+//   knex
+//     .select()
+//     .from('ingredients')
+//     .orderBy('created_at', 'DESC')
+//     .then(ingredients => {
+//       res.json(ingredients);
+//     })
+// });
 router.get('/', function(req, res, next) {
-  knex
-    .select()
-    .from('ingredients')
-    .orderBy('created_at', 'DESC')
-    .then(ingredients => {
-      res.json(ingredients);
-    })
+  const allIngredients = { vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits }
+  console.log("In Ingredient index");
+  res.json(allIngredients);
 });
 
 // PATH: /ingredients/:id ACTION: SHOW

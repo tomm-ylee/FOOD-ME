@@ -12,7 +12,7 @@ class RecipeShowPage extends React.Component {
       comments: [0],
       loading: true
     }
-    this.handleSubmit = this.handleSubmit.bind('this');
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +26,7 @@ class RecipeShowPage extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+
 
 
   }

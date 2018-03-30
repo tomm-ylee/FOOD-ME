@@ -42,4 +42,17 @@ router.post('/', function(req, res, next) {
   }
 });
 
+// PATH: /users/:user_id/ownages ACTION: INDEX OF OWNAGES
+router.get('/:user_id/ownages', function(req, res, next) {
+  const userId = req.params.user_id;
+  knex
+  knex
+    .select()
+    .from('ownages')
+    .where({ user_id })
+    .then(ownages => {
+      res.json(ownages);
+    })
+});
+
 module.exports = router;
