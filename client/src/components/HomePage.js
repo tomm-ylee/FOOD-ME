@@ -1,6 +1,6 @@
 // Import Libraries
 import React, { Component } from 'react';
-import { Jumbotron } from 'reactstrap'
+import { Jumbotron, Button } from 'reactstrap'
 
 // Import Requests
 import { Token, User } from '../lib/requests';
@@ -15,7 +15,6 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: [],
       form: "signIn",
       errors: []
     }
@@ -23,8 +22,16 @@ class HomePage extends Component {
     this.createUser = this.createUser.bind(this);
     this.toSignUp = this.toSignUp.bind(this);
     this.toSignIn = this.toSignIn.bind(this);
+    this.toSignOut = this.toSignOut.bind(this);
     this.searchRecipe = this.searchRecipe.bind(this);
   }
+
+  componentDidMount() {
+    const user = localStorage.getItem("user")
+    if (user) this.setState({ form: "signOut"})
+    // document.querySelector("nav.NavBar").classList.add("hidden")
+  }
+
 
   createToken(logInParams) {
     const { onSignIn = () => {} } = this.props;
@@ -33,9 +40,9 @@ class HomePage extends Component {
         if (!data.errors) {
           // localStorage.setItem('jwt', data.jwt);
           localStorage.setItem('user', data.id );
-          this.setState({ form: "signedIn" })
+          this.setState({ form: "signOut" })
           onSignIn()
-          this.props.history.push('/');
+          this.props.history.push(`/ingredients/${data.id}`);
         } else {
           this.setState({
             errors: [{
@@ -53,9 +60,9 @@ class HomePage extends Component {
         if (!data.errors) {
           // localStorage.setItem('jwt', data.jwt);
           localStorage.setItem('user', data.id );
-          this.setState({ form: "signedIn" })
+          this.setState({ form: "signOut" })
           onSignIn()
-          this.props.history.push('/');
+          this.props.history.push(`/ingredients/${data.id}`);
         } else {
           this.setState({
             errors: [{
@@ -74,6 +81,15 @@ class HomePage extends Component {
     this.setState({ form: "signIn" })
   }
 
+  toSignOut() {
+    console.log("in toSignOut()");
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    this.setState({ form: "signIn" })
+    const { onSignOut = () => {} } = this.props;
+    onSignOut()
+  }
+
   searchRecipe(params) {
     const { searchPhrase } = params;
     this.props.history.push(`/search/${searchPhrase}`)
@@ -90,11 +106,12 @@ class HomePage extends Component {
             id="signin-jumbotron"
           >
             <h1 className="display-3 homeTitle">FOOD-ME</h1>
-            <p>Already Have a Dish In Mind?</p>
-            <RecipeSearch placeHoldText="Search for any dish" onSubmit={this.searchRecipe} />
+            <p>Already Have Something In Mind?</p>
+            <RecipeSearch id="homeSearchBar" placeHoldText="Search for any dish.." onSubmit={this.searchRecipe} />
             <hr/>
             { form === "signIn" ? <SignIn signUpClick={this.toSignUp} onSubmit={this.createToken} /> : null }
             { form === "signUp" ? <SignUp signInClick={this.toSignIn} onSubmit={this.createUser} /> : null }
+            { form === "signOut" ? <Button onClick={this.toSignOut}>Sign Out</Button> : null }
 
 
           </Jumbotron>

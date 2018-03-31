@@ -126,11 +126,22 @@ div.Select-menu {
   border-color: #49EB49
 }
 
-.green {
-  background-color: #6EF66E;
-  color: #114800;
+.multiSelectButton {
+  margin-top: 10px;
 }
 
 .hoverX {
   color: #114800;
+}
+
+.hidden {
+  display: none;
+}
+
+#navSearchBar {
+  margin-left: auto;
+}
+
+.form-group {
+  margin: 0;
 }

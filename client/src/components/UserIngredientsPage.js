@@ -94,7 +94,7 @@ class UserIngredientsPage extends React.Component {
               <h1 className="centerHeader">{user.username}</h1>
               <Row>
                 <Col>
-                  <h3 className="centerHeader"> Add Ingredients </h3>
+                  <h3 className="centerHeader"> Find Your Ingredients: </h3>
                   <MultiSelectField
                     ingredients={ingredients}
                     value={fieldValue}
@@ -103,12 +103,12 @@ class UserIngredientsPage extends React.Component {
                   />
                 </Col>
                 <Col>
-                  <h3 className="centerHeader"> Your Ingredients: </h3>
+                  <h3 className="centerHeader"> See Your Ingredients: </h3>
                   { user_ownages.length === 0 ? <p>Tell us what you have!</p> : null }
                   <div className="userIngredientList">
                     {
                       user_ownages.map((ownage, i) => (
-                        <Button key={i} data-id={ownage.id} className="ingredientButton">
+                        <Button key={ownage.id} data-id={ownage.id} className="ingredientButton">
                           <small
                             data-id={ownage.id}
                             onClick={this.xClick}

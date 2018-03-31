@@ -38,7 +38,7 @@ function MultiSelectField(props) {
     			value={value}
           name="ingredient"
     		/>
-        <Button className="green">Add Ingredients</Button>
+        <Button className="multiSelectButton">Add Ingredients</Button>
       </Form>
   	</div>
   );

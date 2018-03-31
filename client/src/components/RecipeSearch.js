@@ -12,9 +12,9 @@ function RecipeSearch(props) {
       })
     }
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form className="searchBar" onSubmit={handleSubmit}>
       <FormGroup>
-        <input type='searchPhrase' id='searchPhrase' name='searchPhrase' placeholder={props.placeHoldText}/>
+        <input type='searchPhrase' name='searchPhrase' placeholder={props.placeHoldText}/>
       </FormGroup>
 
     </Form>

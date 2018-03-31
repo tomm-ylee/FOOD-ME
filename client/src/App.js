@@ -14,18 +14,18 @@ import RecipeIndexPage from './components/RecipeIndexPage';
 import RecipeShowPage from './components/RecipeShowPage';
 import RecipeSearchPage from './components/RecipeSearchPage';
 import UserIngredientsPage from './components/UserIngredientsPage';
+import RecommendedRecipePage from './components/RecommendedRecipePage';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     document.title = "FOOD-ME"
-    const user_id = localStorage.getItem('user');
-    this.state = { user: user_id }
+    this.state = { user: [] }
 
 
     this.signIn = this.signIn.bind(this);
-    // this.signOut = this.signOut.bind(this);
+    this.signOut = this.signOut.bind(this);
   }
 
   componentDidMount() {
@@ -50,23 +50,26 @@ class App extends Component {
   isSignedIn() {
     return !!this.state.user;
   }
-  //
-  // signOut() {
-  //   localStorage.removeItem('jwt');
-  //   this.setState({user: null});
-  // }
+
+  signOut() {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    this.setState({user: null});
+  }
 
   render() {
+    const { user } = this.state
     return (
       <Router>
         <div className="App">
-          <NavBar user_id={this.state.user} />
+          <NavBar user={user} />
           <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/" onSignOut={this.signOut} component={HomePage} />
             <Route exact path="/recipes" component={RecipeIndexPage} />
             <Route path="/recipes/:id" component={RecipeShowPage} />
             <Route path="/search/:search" component={RecipeSearchPage} />
-            <Route path="/user/:user_id" component={UserIngredientsPage} />
+            <Route path="/ingredients/:user_id" component={UserIngredientsPage} />
+            <Route path="/recipes/" component={RecommendedRecipesPage} />
             <Route component={NotFoundPage} />
           </Switch>
         </div>
