@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import {
-  Card, CardGroup, CardImg, CardText, CardBody, CardTitle, Button
-} from 'reactstrap'
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap'
 
 import { Recipe } from '../lib/requests';
 

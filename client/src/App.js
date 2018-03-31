@@ -14,23 +14,22 @@ import RecipeIndexPage from './components/RecipeIndexPage';
 import RecipeShowPage from './components/RecipeShowPage';
 import RecipeSearchPage from './components/RecipeSearchPage';
 import UserIngredientsPage from './components/UserIngredientsPage';
-import MultiSelectField from './components/MultiSelectField';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
+    document.title = "FOOD-ME"
     const user_id = localStorage.getItem('user');
-    if (user_id) {
-      this.state = { user: user_id }
-    }
+    this.state = { user: user_id }
+
 
     this.signIn = this.signIn.bind(this);
     // this.signOut = this.signOut.bind(this);
   }
 
   componentDidMount() {
-    // this.signIn();
+    this.signIn();
   }
 
   signIn() {
@@ -61,15 +60,13 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <NavBar />
+          <NavBar user_id={this.state.user} />
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/recipes" component={RecipeIndexPage} />
             <Route path="/recipes/:id" component={RecipeShowPage} />
             <Route path="/search/:search" component={RecipeSearchPage} />
-            <Route path="/user" component={UserIngredientsPage} user={this.state.user} />
-            <Route path="/devtest" component={MultiSelectField} />
-
+            <Route path="/user/:user_id" component={UserIngredientsPage} />
             <Route component={NotFoundPage} />
           </Switch>
         </div>

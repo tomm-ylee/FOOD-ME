@@ -25,8 +25,7 @@ class RecipeShowPage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-
+    // const formData = new FormData(event.currentTarget);
 
 
   }
@@ -51,7 +50,7 @@ class RecipeShowPage extends React.Component {
           <div className="backgroundDiv">
             <div className="content">
               <h2>{recipe.title}</h2>
-              <img className="recipeImage" src={require('../images/spaghetti.jpg')} />
+              <img className="recipeImage" src={require('../images/spaghetti.jpg')} alt=''/>
               <p>{recipe.description}</p>
               <p><em>(Duration: {recipe.duration} minutes)</em></p>
               <ListGroup className="viewRecipeList">

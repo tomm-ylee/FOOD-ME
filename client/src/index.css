@@ -74,8 +74,9 @@ main.HomePage > .backgroundDiv {
 
 .content {
   background-color: white;
-  margin: 0 300px;
+  margin: 0 150px;
   padding: 20px;
+  min-height: 80vh;
 }
 .recipeImage {
   max-width: 100%;
@@ -112,4 +113,24 @@ a {
 
 #homeSearch {
   margin-bottom: 200px;
+}
+
+div.Select-menu {
+  max-height: 700px;
+}
+
+.ingredientButton {
+  margin: 5px;
+  background-color: palegreen;
+  color: #114800;
+  border-color: #49EB49
+}
+
+.green {
+  background-color: #6EF66E;
+  color: #114800;
+}
+
+.hoverX {
+  color: #114800;
 }

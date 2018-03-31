@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Jumbotron } from 'reactstrap'
 
 // Import Requests
-import { Token, User, Recipe } from '../lib/requests';
+import { Token, User } from '../lib/requests';
 
 // Import Component Files
 import SignIn from './SignIn'
@@ -80,7 +80,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const { errors, form } = this.state;
+    const { form } = this.state;
     return (
       <main
         className="HomePage"
@@ -91,7 +91,7 @@ class HomePage extends Component {
           >
             <h1 className="display-3 homeTitle">FOOD-ME</h1>
             <p>Already Have a Dish In Mind?</p>
-            <RecipeSearch onSubmit={this.searchRecipe} />
+            <RecipeSearch placeHoldText="Search for any dish" onSubmit={this.searchRecipe} />
             <hr/>
             { form === "signIn" ? <SignIn signUpClick={this.toSignUp} onSubmit={this.createToken} /> : null }
             { form === "signUp" ? <SignUp signInClick={this.toSignIn} onSubmit={this.createUser} /> : null }

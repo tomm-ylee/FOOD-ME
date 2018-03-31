@@ -1,8 +1,8 @@
 const DOMAIN = 'http://localhost:9000';
 
-function getJWT() {
-  return localStorage.getItem('jwt');
-}
+// function getJWT() {
+//   return localStorage.getItem('jwt');
+// }
 
 const Ingredient = {
   all() {
@@ -12,11 +12,36 @@ const Ingredient = {
       .then(res => res.json())
   }
 }
-
 const Ownage = {
   all(user_id) {
     return fetch(
-      `${DOMAIN}/users/${user_id}/ownages`, {}
+      `${DOMAIN}/users/${user_id}/ownages`,
+      {
+        // headers: { 'Authorization': getJWT() }
+      }
+    )
+      .then(res => res.json())
+  },
+  create(params, user_id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/ownages`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(params)
+      }
+    )
+      .then(res => res.json())
+  },
+  destroy(user_id, id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/ownages/${id}`,
+      {
+        method: 'DELETE',
+      }
     )
       .then(res => res.json())
   }
@@ -26,22 +51,14 @@ const Recipe = {
   all() {
     return fetch(
       `${DOMAIN}/recipes`,
-      {
-        // headers: {
-        //   'Authorization': getJWT()
-        // }
-      }
+      { }
     )
       .then(res => res.json())
   },
   one(id) {
     return fetch(
       `${DOMAIN}/recipes/${id}`,
-      {
-        // headers: {
-        //   'Authorization': getJWT()
-        // }
-      }
+      {}
     )
       .then(res => res.json());
   },
@@ -74,6 +91,13 @@ const User = {
       `${DOMAIN}/users`
     ).then(res => res.json())
   },
+  one(id) {
+    return fetch(
+      `${DOMAIN}/users/${id}`,
+      {}
+    )
+      .then(res => res.json())
+  },
   create(params) {
     return fetch(
       `${DOMAIN}/users`,
@@ -84,11 +108,6 @@ const User = {
         },
         body: JSON.stringify(params)
       }
-    ).then(res => res.json())
-  },
-  usages(params) {
-    return fetch(
-      `${DOMAIN}/users/usages`, {}
     ).then(res => res.json())
   }
 }

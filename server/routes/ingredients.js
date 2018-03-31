@@ -15,7 +15,6 @@ const { vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, frui
 // });
 router.get('/', function(req, res, next) {
   const allIngredients = { vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits }
-  console.log("In Ingredient index");
   res.json(allIngredients);
 });
 

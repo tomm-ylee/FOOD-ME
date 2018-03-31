@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { } from 'react-router-dom';
 import { Form, FormGroup } from 'reactstrap';
 
 function RecipeSearch(props) {
@@ -14,7 +14,7 @@ function RecipeSearch(props) {
   return (
     <Form onSubmit={handleSubmit}>
       <FormGroup>
-        <input type='searchPhrase' id='searchPhrase' name='searchPhrase' placeholder='Search for any dish'/>
+        <input type='searchPhrase' id='searchPhrase' name='searchPhrase' placeholder={props.placeHoldText}/>
       </FormGroup>
 
     </Form>
