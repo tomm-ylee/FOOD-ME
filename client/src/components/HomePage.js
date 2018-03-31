@@ -23,7 +23,6 @@ class HomePage extends Component {
     this.toSignUp = this.toSignUp.bind(this);
     this.toSignIn = this.toSignIn.bind(this);
     this.toSignOut = this.toSignOut.bind(this);
-    this.searchRecipe = this.searchRecipe.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +39,7 @@ class HomePage extends Component {
         if (!data.errors) {
           // localStorage.setItem('jwt', data.jwt);
           localStorage.setItem('user', data.id );
-          this.setState({ form: "signOut" })
+          this.setState({ form: "signOut" });
           onSignIn()
           this.props.history.push(`/ingredients/${data.id}`);
         } else {
@@ -58,6 +57,7 @@ class HomePage extends Component {
     User.create(signUpParams)
       .then(data => {
         if (!data.errors) {
+          console.log("In if block");
           // localStorage.setItem('jwt', data.jwt);
           localStorage.setItem('user', data.id );
           this.setState({ form: "signOut" })
@@ -82,17 +82,12 @@ class HomePage extends Component {
   }
 
   toSignOut() {
-    console.log("in toSignOut()");
-    localStorage.removeItem('jwt');
+    const { onSignOut = () => {} } = this.props;
+
+    // localStorage.removeItem('jwt');
     localStorage.removeItem('user');
     this.setState({ form: "signIn" })
-    const { onSignOut = () => {} } = this.props;
     onSignOut()
-  }
-
-  searchRecipe(params) {
-    const { searchPhrase } = params;
-    this.props.history.push(`/search/${searchPhrase}`)
   }
 
   render() {
@@ -107,7 +102,7 @@ class HomePage extends Component {
           >
             <h1 className="display-3 homeTitle">FOOD-ME</h1>
             <p>Already Have Something In Mind?</p>
-            <RecipeSearch id="homeSearchBar" placeHoldText="Search for any dish.." onSubmit={this.searchRecipe} />
+            <RecipeSearch id="homeSearchBar" placeHoldText="Search for any dish.."/>
             <hr/>
             { form === "signIn" ? <SignIn signUpClick={this.toSignUp} onSubmit={this.createToken} /> : null }
             { form === "signUp" ? <SignUp signInClick={this.toSignIn} onSubmit={this.createUser} /> : null }

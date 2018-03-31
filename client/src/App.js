@@ -41,10 +41,10 @@ class App extends Component {
     //     user: payload
     //   });
     // }
-    const user_id = localStorage.getItem('user');
+    const user = localStorage.getItem('user');
 
-    if (user_id) {
-      this.setState({ user: user_id })
+    if (user) {
+      this.setState({ user: user })
     }
   }
   isSignedIn() {
@@ -52,8 +52,6 @@ class App extends Component {
   }
 
   signOut() {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('user');
     this.setState({user: null});
   }
 
@@ -64,7 +62,10 @@ class App extends Component {
         <div className="App">
           <NavBar user={user} />
           <Switch>
-            <Route exact path="/" onSignOut={this.signOut} component={HomePage} />
+            <Route
+              exact path="/"
+              render={ props => (<HomePage {...props} onSignIn={this.signIn} onSignOn={this.signOn} />) }
+            />
             <Route exact path="/recipes" component={RecipeIndexPage} />
             <Route path="/recipes/:id" component={RecipeShowPage} />
             <Route path="/search/:search" component={RecipeSearchPage} />
