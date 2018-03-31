@@ -14,7 +14,7 @@ import RecipeIndexPage from './components/RecipeIndexPage';
 import RecipeShowPage from './components/RecipeShowPage';
 import RecipeSearchPage from './components/RecipeSearchPage';
 import UserIngredientsPage from './components/UserIngredientsPage';
-import RecommendedRecipePage from './components/RecommendedRecipePage';
+import RecommendedRecipesPage from './components/RecommendedRecipesPage';
 
 class App extends Component {
   constructor(props) {
