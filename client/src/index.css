@@ -2,7 +2,9 @@
 * {
   box-sizing: content-box;
 }
-
+.flexContainer {
+  display: flex;
+}
 .homeTitle {
   align-self: center;
   border-radius: 6px;
@@ -37,6 +39,7 @@ main.HomePage > .backgroundDiv {
   flex-wrap: wrap;
   justify-content: center;
   padding: 0;
+  margin-bottom: 20px;
 }
 
 .recipeCard {
@@ -144,4 +147,37 @@ div.Select-menu {
 
 .form-group {
   margin: 0;
+}
+
+.pageNumber {
+  flex-direction: column;
+  align-items: center;
+}
+
+.pageNumber > p {
+  margin: 0px
+}
+
+.card-img-overlay.cardOverlay {
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.cardOverlay > .favouriteButton {
+
+}
+
+.cardOverlay > .recipeTitle {
+  height: 50px;
+  margin: 0;
+  padding: 10px;
+  background-color: rgba(0,100,70,0.8)
+}
+
+.cardOverlay > .recipeTitle p {
+  font-size: 16pt;
+  font-weight: bold;
+  color: black;
+  font-family: sans-serif;
 }

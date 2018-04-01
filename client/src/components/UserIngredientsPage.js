@@ -6,8 +6,7 @@ import MultiSelectField from './MultiSelectField';
 class UserIngredientsPage extends React.Component {
   constructor (props) {
     super(props);
-
-    const user_id = props.match.params.user_id
+    const user_id = props.user
 
     this.state = {
       ingredients: [],

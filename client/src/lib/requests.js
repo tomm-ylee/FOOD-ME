@@ -48,9 +48,9 @@ const Ownage = {
 }
 
 const Recipe = {
-  all() {
+  all(user_id, page) {
     return fetch(
-      `${DOMAIN}/recipes`,
+      `${DOMAIN}/recipes/${user_id}/${page}`,
       { }
     )
       .then(res => res.json())
@@ -62,23 +62,9 @@ const Recipe = {
     )
       .then(res => res.json());
   },
-  create(params) {
+  search(searchPhrase, page = 1) {
     return fetch(
-      `${DOMAIN}/recipes`,
-      {
-        headers: {
-          // 'Authorization': getJWT(),
-          'Content-Type':'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify(params)
-      }
-    )
-      .then(res => res.json())
-  },
-  search(searchPhrase) {
-    return fetch(
-      `${DOMAIN}/recipes/search/${searchPhrase}`,
+      `${DOMAIN}/recipes/search/${searchPhrase}/${page}`,
       {}
     )
       .then(res => res.json())

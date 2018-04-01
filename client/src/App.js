@@ -66,11 +66,15 @@ class App extends Component {
               exact path="/"
               render={ props => (<HomePage {...props} onSignIn={this.signIn} onSignOn={this.signOn} />) }
             />
-            <Route exact path="/recipes" component={RecipeIndexPage} />
-            <Route path="/recipes/:id" component={RecipeShowPage} />
             <Route path="/search/:search" component={RecipeSearchPage} />
-            <Route path="/ingredients/:user_id" component={UserIngredientsPage} />
-            <Route path="/recipes/" component={RecommendedRecipesPage} />
+            <Route
+              exact path="/ingredients"
+              render={ props => (<UserIngredientsPage {...props} user={user}/>) }
+            />
+            <Route
+              exact path="/recipes"
+              render={ props => (<RecommendedRecipesPage {...props} user={user}/>) }
+            />
             <Route component={NotFoundPage} />
           </Switch>
         </div>

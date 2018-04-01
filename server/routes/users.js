@@ -23,7 +23,7 @@ router.post('/', function(req, res, next) {
   const { username, email, password, password_confirmation } = req.body
   if (email.length > 0) {
     knex.insert({ username, email }).into('users').returning('*').then(user => {
-      res.json(user);
+      res.json(user[0]);
     })
   } else {
     res.json({errors: "Invalid Sign Up"})
