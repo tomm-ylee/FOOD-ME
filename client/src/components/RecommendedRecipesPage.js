@@ -27,10 +27,9 @@ class RecommendedRecipesPage extends React.Component {
   componentDidMount() {
     const { user_id, page } = this.state
     Recipe.all(user_id, page).then(data => {
-      this.setState({
-        recipes: data.recipes,
-        loading: false
-      })
+      if (data) {
+        this.setState({ recipes: data.recipes, loading: false })
+      }
     })
   }
 
@@ -53,7 +52,6 @@ class RecommendedRecipesPage extends React.Component {
   seeRecipe(event) {
     const { id } = event.currentTarget.dataset
     Recipe.one(id).then(data => {
-      console.log(data.recipe_url);
       const win = window.open(data.recipe_url, '_blank');
       win.focus();
     })
@@ -85,7 +83,10 @@ class RecommendedRecipesPage extends React.Component {
                       <Card className="recipeCard" data-id={recipe.id} onClick={this.seeRecipe}>
                           <CardImg top width="100%" src={recipe.image} />
                         <CardImgOverlay className="flexContainer cardOverlay">
-                          <CardTitle className="favouriteButton">☆</CardTitle>
+                          <CardTitle className="favouriteButtons">
+                            <FontAwesome name="star-o"/>
+                            <FontAwesome name="check-circle-o"/>
+                          </CardTitle>
                           <CardTitle className="recipeTitle"><p>{recipe.title}</p></CardTitle>
                         </CardImgOverlay>
                       </Card>

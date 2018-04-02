@@ -9,15 +9,24 @@ const { indexSnap, searchSnap, showSnap } = require('../assets/apiSearches')
 API_DOMAIN = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes"
 API_KEY = "Q1iCBBTOU9mshgVeyedEPiiWw2wpp1kYy7YjsnHkC4SHBJ7kds";
 
-// PATH: /recipes/search/:searchPhrase/:page ACTION: SEARCH
-router.get('/search/:searchPhrase/:page', function(req, res, next) {res.json(searchSnap)})
-// router.get('/search/:searchPhrase/:page', function(req, res, next) {
-//   const { searchPhrase, page = 1 } = req.params
+// PATH: /recipes/search/:searchPhrase/:page/:diet ACTION: SEARCH
+router.get('/search/:searchPhrase/:page/:diet', function(req, res, next) {res.json(searchSnap)})
+// router.get('/search/:searchPhrase/:page/:diet', function(req, res, next) {
+//   const { searchPhrase, page, diet } = req.params
 //   const perPage = 12
 //   const offset = (page - 1) * perPage
 //
-//   const searchURL = `${API_DOMAIN}/searchComplex?number=${perPage}&offset=${offset}&query=${searchPhrase}`
+//   let dietSpec = "";
+//   if (diet === "vegetarian") {
+//     console.log("In vegetarian");
+//     dietSpec = "&diet=vegetarian"
+//   } else if (diet === "vegan") {
+//     console.log("In vegan");
+//     dietSpec = "&diet=vegan"
+//   }
 //
+//   const searchURL = `${API_DOMAIN}/searchComplex?number=${perPage}&offset=${offset}&query=${searchPhrase}${dietSpec}`
+//   console.log("SearchURL is", searchURL);
 //   unirest.get(searchURL)
 //     .header("X-Mashape-Key", API_KEY)
 //     .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
@@ -29,13 +38,23 @@ router.get('/search/:searchPhrase/:page', function(req, res, next) {res.json(sea
 // PATH: /recipes/:user_id/:page ACTION: INDEX RECIPES
 router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
 // router.get('/:user_id/:page', function(req, res, next) {
-//   const { user_id, page = 1 } = req.params
+//   const { user_id, page} = req.params
 //   const perPage = 12
 //   const offset = (page - 1) * perPage
 //
-//   knex.select().from('ownages').where({ user_id }).orderBy('ingredient_name').then(ownages => {
+//   let ownages, user;
+//   return Promise.all([
+//     knex.select().from('ownages').where({ user_id }).orderBy('ingredient_name').then(data => {
+//       ownages = data
+//     }),
+//     knex.first().from('users').where({ id: user_id }).then(data => {
+//       user = data
+//     })
+//   ])
+//   .then(() => {
 //     const ingredients = ownages.map(ownage => ownage.ingredient_name).join('%2C').replace(/ /g, '+')
 //     const searchURL = `${API_DOMAIN}/findByIngredients?ingredients=${ingredients}&number=${perPage}&offset=${offset}&ranking=1&fillIngredients=true`
+//
 //     unirest.get(searchURL)
 //     .header("X-Mashape-Key", API_KEY)
 //     .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
@@ -52,7 +71,6 @@ router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
 //           missedIngredients: recipe.missedIngredients.map(ingredient => ingredient.name)
 //         }
 //       })
-//
 //       res.json({ recipes: recipes} );
 //     });
 //   })

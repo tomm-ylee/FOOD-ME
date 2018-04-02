@@ -12,26 +12,54 @@ class RecipeSearchPage extends React.Component {
       recipes: [],
       searchPhrase: this.props.match.params.search,
       loading: true,
+      diet: "none",
       page: 1
     }
 
     this.seeRecipe = this.seeRecipe.bind(this)
+    this.toggleVegan = this.toggleVegan.bind(this)
+    this.toggleVegetarian = this.toggleVegetarian.bind(this)
+
   }
 
   componentDidMount() {
-    const { searchPhrase } = this.state
+    const { searchPhrase, page, diet } = this.state
 
-    Recipe.search(searchPhrase).then(data => {
-      this.setState({ recipes: data.recipes, loading: false })
+    Recipe.search(searchPhrase, page, diet).then(data => {
+      if (data) {
+        this.setState({ recipes: data.recipes, loading: false })
+      }
     })
   }
 
   seeRecipe(event) {
     const { id } = event.currentTarget.dataset
     Recipe.one(id).then(data => {
-      console.log(data.recipe_url);
       const win = window.open(data.recipe_url, '_blank');
       win.focus();
+    })
+  }
+
+
+  toggleVegan() {
+    const { searchPhrase, page } = this.state;
+    let { diet } = this.state;
+    diet = (diet === "vegan" ? "" : "vegan")
+    this.setState({ diet })
+
+    Recipe.search(searchPhrase, page, diet).then(data => {
+      this.setState({ recipes: data.recipes })
+    })
+  }
+
+  toggleVegetarian() {
+    const { searchPhrase, page } = this.state;
+    let { diet } = this.state;
+    diet = (diet === "vegetarian" ? "" : "vegetarian")
+    this.setState({ diet })
+
+    Recipe.search(searchPhrase, page, diet).then(data => {
+      this.setState({ recipes: data.recipes })
     })
   }
 
@@ -46,13 +74,19 @@ class RecipeSearchPage extends React.Component {
         </main>
       )
     } else {
-      const { page } = this.state
+      const { page, diet } = this.state
       return (
         <main
           className="RecipeSearchPage"
         >
           <div className="backgroundDiv">
             <div className="content">
+              <div>
+                <input type="checkbox" id="veganCheckbox" checked={diet === "vegan" ? "checked" : ""} onClick={this.toggleVegan}/>
+                <label for="veganCheckbox">Vegan</label>
+                <input type="checkbox" id="vegetarianCheckbox" checked={diet === "vegetarian" ? "checked" : ""} onClick={this.toggleVegetarian}/>
+                <label for="vegetarianCheckbox">Vegetarian</label>
+              </div>
               <div className="recipeCardList">
               {
                 this.state.recipes.map(
@@ -60,7 +94,10 @@ class RecipeSearchPage extends React.Component {
                     <Card className="recipeCard" key={recipe.id} data-id={recipe.id} onClick={this.seeRecipe}>
                       <CardImg top width="100%" src={recipe.image} />
                       <CardImgOverlay className="flexContainer cardOverlay">
-                        <CardTitle className="favouriteButton"><FontAwesome name='start-o' size="2x" /></CardTitle>
+                        <CardTitle className="favouriteButtons">
+                          <FontAwesome name="star-o"/>
+                          <FontAwesome name="check-circle-o"/>
+                        </CardTitle>
                         <CardTitle className="recipeTitle"><p>{recipe.title}</p></CardTitle>
                       </CardImgOverlay>
                     </Card>

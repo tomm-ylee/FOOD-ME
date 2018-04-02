@@ -62,9 +62,9 @@ const Recipe = {
     )
       .then(res => res.json());
   },
-  search(searchPhrase, page = 1) {
+  search(searchPhrase, page, diet) {
     return fetch(
-      `${DOMAIN}/recipes/search/${searchPhrase}/${page}`,
+      `${DOMAIN}/recipes/search/${searchPhrase}/${page}/${diet}`,
       {}
     )
       .then(res => res.json())
@@ -89,6 +89,18 @@ const User = {
       `${DOMAIN}/users`,
       {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      }
+    ).then(res => res.json())
+  },
+  update(params, id) {
+    return fetch(
+      `${DOMAIN}/users/${id}`,
+      {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },

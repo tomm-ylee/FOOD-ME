@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap'
+import { Row, Col, Button, Input, Label } from 'reactstrap'
 import { Ingredient, User, Ownage } from '../lib/requests';
 import MultiSelectField from './MultiSelectField';
 
@@ -32,7 +32,7 @@ class UserIngredientsPage extends React.Component {
         this.setState({ ingredients });
       }),
       User.one(user_id).then(user => {
-        this.setState({ user });
+        this.setState({ user: user });
       }),
       Ownage.all(user_id).then(user_ownages => {
         this.setState({ user_ownages });
@@ -91,10 +91,10 @@ class UserIngredientsPage extends React.Component {
         >
           <div className="backgroundDiv">
             <div className="content">
-              <h1 className="centerHeader">{user.username}</h1>
+              <h1 className="centerHeader">{user.username}'s Settings</h1>
               <Row>
                 <Col>
-                  <Row>
+                  <Row className="userPageSection">
                     <h3 className="centerHeader"> Find Your Ingredients: </h3>
                     <MultiSelectField
                       ingredients={ingredients}
@@ -103,15 +103,7 @@ class UserIngredientsPage extends React.Component {
                       onSelectSubmit={this.addIngredients}
                     />
                   </Row>
-                  <Row>
-                      <div>
-                        <h3 className="centerHeader"> Dietary Settings: </h3>
-                        <input type="checkbox" id="veganCheckbox" value="vegan"/>
-                        <label for="veganCheckbox">Vegan</label>
-                        <input type="checkbox" id="vegetarianCheckbox" value="vegetarian"/>
-                        <label for="vegetarianCheckbox">Vegetarian</label>
-                      </div>
-                  </Row>
+
                 </Col>
                 <Col>
                   <h3 className="centerHeader"> See Your Ingredients: </h3>

@@ -30,6 +30,17 @@ router.post('/', function(req, res, next) {
   }
 });
 
+// PATH: /users/:id ACTION: UPDATE
+router.patch('/:id', function(req, res, next) {
+  const { diet } = req.body
+  const { id } = req.params
+  console.log(id);
+  knex('users').where({ id }).update({ diet }).returning('*').then(user => {
+    console.log(user);
+    res.json(user[0]);
+  }).catch(data => console.log(data))
+});
+
 // PATH: /users/:user_id/ownages ACTION: INDEX OF OWNAGES
 router.get('/:user_id/ownages', function(req, res, next) {
   const user_id = req.params.user_id;
@@ -63,8 +74,8 @@ router.post('/:user_id/ownages', function(req, res, next) {
       })
     })
   )
-  .then( () => {
-    setTimeout( () => {
+  .then(() => {
+    setTimeout(() => {
       knex.select().from('ownages').where({ user_id }).orderBy('ingredient_name').then(ownages => {
         res.json(ownages);
       })
