@@ -11,35 +11,35 @@ API_KEY = "Q1iCBBTOU9mshgVeyedEPiiWw2wpp1kYy7YjsnHkC4SHBJ7kds";
 
 // PATH: /recipes/search/:searchPhrase/:page/:diet ACTION: SEARCH
 router.get('/search/:searchPhrase/:page/:diet', function(req, res, next) {res.json(searchSnap)})
-// router.get('/search/:searchPhrase/:page/:diet', function(req, res, next) {
-//   const { searchPhrase, page, diet } = req.params
-//   const perPage = 12
-//   const offset = (page - 1) * perPage
-//
-//   let dietSpec = "";
-//   if (diet === "vegetarian") {
-//     console.log("In vegetarian");
-//     dietSpec = "&diet=vegetarian"
-//   } else if (diet === "vegan") {
-//     console.log("In vegan");
-//     dietSpec = "&diet=vegan"
-//   }
-//
-//   const searchURL = `${API_DOMAIN}/searchComplex?number=${perPage}&offset=${offset}&query=${searchPhrase}${dietSpec}`
-//   console.log("SearchURL is", searchURL);
-//   unirest.get(searchURL)
-//     .header("X-Mashape-Key", API_KEY)
-//     .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
-//     .end(result => {
-//       res.json({ recipes: result.body.results });
-//     });
-// });
+router.get('/search/:searchPhrase/:page/:diet', function(req, res, next) {
+  const { searchPhrase, page, diet } = req.params
+  const perPage = 9
+  const offset = (page - 1) * perPage
+
+  let dietSpec = "";
+  if (diet === "vegetarian") {
+    console.log("In vegetarian");
+    dietSpec = "&diet=vegetarian"
+  } else if (diet === "vegan") {
+    console.log("In vegan");
+    dietSpec = "&diet=vegan"
+  }
+
+  const searchURL = `${API_DOMAIN}/searchComplex?number=${perPage}&offset=${offset}&query=${searchPhrase}${dietSpec}`
+  console.log("SearchURL is", searchURL);
+  unirest.get(searchURL)
+    .header("X-Mashape-Key", API_KEY)
+    .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
+    .end(result => {
+      res.json({ recipes: result.body.results });
+    });
+});
 
 // PATH: /recipes/:user_id/:page ACTION: INDEX RECIPES
 router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
 // router.get('/:user_id/:page', function(req, res, next) {
 //   const { user_id, page} = req.params
-//   const perPage = 12
+//   const perPage = 9
 //   const offset = (page - 1) * perPage
 //
 //   let ownages, user;

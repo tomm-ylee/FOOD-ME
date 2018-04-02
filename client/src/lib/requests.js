@@ -1,3 +1,7 @@
+// Order of API request objects:
+"Ingredient, Ownage, Favourite, Complete, Recipe, User, Token"
+
+
 const DOMAIN = 'http://localhost:9000';
 
 // function getJWT() {
@@ -12,6 +16,7 @@ const Ingredient = {
       .then(res => res.json())
   }
 }
+
 const Ownage = {
   all(user_id) {
     return fetch(
@@ -44,6 +49,87 @@ const Ownage = {
       }
     )
       .then(res => res.json())
+  }
+}
+
+const Favourite = {
+  all(user_id) {
+    return fetch(
+      `${DOMAIN}/favourites/${user_id}`,
+      {
+        // headers: { 'Authorization': getJWT() }
+      }
+    )
+      .then(res => res.json())
+  },
+  create(params, user_id) {
+    return fetch(
+      `${DOMAIN}/favourites/${user_id}`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(params)
+      }
+    )
+      .then(res => res.json())
+  },
+  destroy(id) {
+    return fetch(
+      `${DOMAIN}/favourites/${id}`,
+      {
+        method: 'DELETE',
+      }
+    )
+  }
+}
+
+const Complete = {
+  all(user_id) {
+    return fetch(
+      `${DOMAIN}/completes/${user_id}`,
+      {
+        // headers: { 'Authorization': getJWT() }
+      }
+    )
+      .then(res => res.json())
+  },
+  create(params, user_id) {
+    return fetch(
+      `${DOMAIN}/completes/${user_id}`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(params)
+      }
+    )
+      .then(res => res.json())
+  },
+  destroy(id) {
+    return fetch(
+      `${DOMAIN}/completes/${id}`,
+      {
+        method: 'DELETE',
+      }
+    )
+  },
+  update(params, id) {
+    return fetch(
+      `${DOMAIN}/completes/${id}`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'PATCH',
+        body: JSON.stringify(params)
+      }
+    )
   }
 }
 

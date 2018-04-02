@@ -12,7 +12,8 @@ const usersRouter = require('./routes/users');
 const tokensRouter = require('./routes/tokens');
 const recipesRouter = require('./routes/recipes');
 const ingredientsRouter = require('./routes/ingredients');
-// const ownagesRouter = require('./routes/ownages');
+const favouritesRouter = require('./routes/favourites');
+const completesRouter = require('./routes/completes');
 
 // MIDDLEWARE SETUP
 const app = express();
@@ -33,7 +34,8 @@ app.use('/users', usersRouter);
 app.use('/tokens', tokensRouter);
 app.use('/recipes', recipesRouter);
 app.use('/ingredients', ingredientsRouter);
-// app.use('/ownages', ownagesRouter);
+app.use('/favourites', favouritesRouter);
+app.use('/completes', completesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -22,6 +22,8 @@ class RecommendedRecipesPage extends React.Component {
     this.seeRecipe = this.seeRecipe.bind(this)
     this.popIn = this.popIn.bind(this)
     this.popOut = this.popOut.bind(this)
+    this.upPage = this.upPage.bind(this)
+    this.downPage = this.downPage.bind(this)
   }
 
   componentDidMount() {
@@ -47,6 +49,27 @@ class RecommendedRecipesPage extends React.Component {
     popState[id] = false
 
     this.setState({ popState: popState })
+  }
+
+  upPage() {
+    let { user_id, page } = this.state
+    page += 1
+    Recipe.all(user_id, page).then(data => {
+      if (data) {
+        this.setState({ recipes: data.recipes, loading: false })
+      }
+    })
+  }
+
+  downPage() {
+    let { user_id, page } = this.state
+    if (page > 1) page -= 1
+    Recipe.all(user_id, page).then(data => {
+      if (data) {
+        this.setState({ recipes: data.recipes, loading: false })
+      }
+    })
+
   }
 
   seeRecipe(event) {
@@ -113,7 +136,7 @@ class RecommendedRecipesPage extends React.Component {
                 )
               }
               </div>
-              <PageNumber page={page} />
+              <PageNumber goUpPage={this.upPage} goDownPage={this.downPage} page={page} />
             </div>
           </div>
         </main>

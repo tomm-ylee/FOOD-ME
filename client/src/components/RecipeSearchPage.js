@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardLink, CardTitle, CardImgOverlay } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
-import { Recipe } from '../lib/requests';
+import { Recipe, Favourite, Complete } from '../lib/requests';
 
 import PageNumber from './PageNumber.js'
 
@@ -19,7 +19,12 @@ class RecipeSearchPage extends React.Component {
     this.seeRecipe = this.seeRecipe.bind(this)
     this.toggleVegan = this.toggleVegan.bind(this)
     this.toggleVegetarian = this.toggleVegetarian.bind(this)
+    this.upPage = this.upPage.bind(this)
+    this.downPage = this.downPage.bind(this)
 
+    this.createFavourite = this.createFavourite.bind(this)
+    this.destroyFavourite = this.destroyFavourite.bind(this)
+    this.createComplete = this.createComplete.bind(this)
   }
 
   componentDidMount() {
@@ -63,6 +68,40 @@ class RecipeSearchPage extends React.Component {
     })
   }
 
+  upPage() {
+    let { searchPhrase, diet, page } = this.state;
+    page += 1
+
+    Recipe.search(searchPhrase, page, diet).then(data => {
+      this.setState({ recipes: data.recipes, page: page })
+    })
+  }
+
+  downPage() {
+    let { searchPhrase, diet, page } = this.state;
+    if (page > 1) page -= 1
+
+    Recipe.search(searchPhrase, page, diet).then(data => {
+      this.setState({ recipes: data.recipes, page: page })
+    })
+  }
+
+  createFavourite(event) {
+
+  }
+
+  destroyFavourite(event) {
+    const { id } = event.currentTarget.dataset
+
+    Favourite.destroy(id).then(() => {
+      
+    })
+  }
+
+  createComplete(event) {
+
+  }
+
   render() {
     if (this.state.loading) {
       return (
@@ -83,9 +122,9 @@ class RecipeSearchPage extends React.Component {
             <div className="content">
               <div>
                 <input type="checkbox" id="veganCheckbox" checked={diet === "vegan" ? "checked" : ""} onClick={this.toggleVegan}/>
-                <label for="veganCheckbox">Vegan</label>
+                <label htmlFor="veganCheckbox">Vegan</label>
                 <input type="checkbox" id="vegetarianCheckbox" checked={diet === "vegetarian" ? "checked" : ""} onClick={this.toggleVegetarian}/>
-                <label for="vegetarianCheckbox">Vegetarian</label>
+                <label htmlFor="vegetarianCheckbox">Vegetarian</label>
               </div>
               <div className="recipeCardList">
               {
@@ -105,7 +144,7 @@ class RecipeSearchPage extends React.Component {
                 )
               }
               </div>
-              <PageNumber page={page} />
+              <PageNumber goUpPage={this.upPage} goDownPage={this.downPage} page={page} />
             </div>
           </div>
         </main>
