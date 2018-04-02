@@ -1,6 +1,6 @@
 // Import Libraries
 import React, { Component } from 'react';
-import { Jumbotron, Button } from 'reactstrap'
+import { Jumbotron, Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
 
 // Import Requests
 import { Token, User } from '../lib/requests';
@@ -30,7 +30,6 @@ class HomePage extends Component {
     if (user) this.setState({ form: "signOut"})
     // document.querySelector("nav.NavBar").classList.add("hidden")
   }
-
 
   createToken(logInParams) {
     const { onSignIn = () => {} } = this.props;
@@ -107,8 +106,6 @@ class HomePage extends Component {
             { form === "signIn" ? <SignIn signUpClick={this.toSignUp} onSubmit={this.createToken} /> : null }
             { form === "signUp" ? <SignUp signInClick={this.toSignIn} onSubmit={this.createUser} /> : null }
             { form === "signOut" ? <Button onClick={this.toSignOut}>Sign Out</Button> : null }
-
-
           </Jumbotron>
         </div>
       </main>

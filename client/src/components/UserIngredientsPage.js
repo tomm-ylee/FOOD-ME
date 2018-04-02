@@ -6,7 +6,8 @@ import MultiSelectField from './MultiSelectField';
 class UserIngredientsPage extends React.Component {
   constructor (props) {
     super(props);
-    const user_id = props.user
+    // const user_id = props.user
+    const user_id = localStorage.getItem('user');
 
     this.state = {
       ingredients: [],
@@ -93,13 +94,24 @@ class UserIngredientsPage extends React.Component {
               <h1 className="centerHeader">{user.username}</h1>
               <Row>
                 <Col>
-                  <h3 className="centerHeader"> Find Your Ingredients: </h3>
-                  <MultiSelectField
-                    ingredients={ingredients}
-                    value={fieldValue}
-                    onSelectChange={this.updateFieldValue}
-                    onSelectSubmit={this.addIngredients}
-                  />
+                  <Row>
+                    <h3 className="centerHeader"> Find Your Ingredients: </h3>
+                    <MultiSelectField
+                      ingredients={ingredients}
+                      value={fieldValue}
+                      onSelectChange={this.updateFieldValue}
+                      onSelectSubmit={this.addIngredients}
+                    />
+                  </Row>
+                  <Row>
+                      <div>
+                        <h3 className="centerHeader"> Dietary Settings: </h3>
+                        <input type="checkbox" id="veganCheckbox" value="vegan"/>
+                        <label for="veganCheckbox">Vegan</label>
+                        <input type="checkbox" id="vegetarianCheckbox" value="vegetarian"/>
+                        <label for="vegetarianCheckbox">Vegetarian</label>
+                      </div>
+                  </Row>
                 </Col>
                 <Col>
                   <h3 className="centerHeader"> See Your Ingredients: </h3>

@@ -10,8 +10,8 @@ import {  } from './lib/requests'
 import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
 import NotFoundPage from './components/NotFoundPage';
-import RecipeIndexPage from './components/RecipeIndexPage';
-import RecipeShowPage from './components/RecipeShowPage';
+// import RecipeIndexPage from './components/RecipeIndexPage';
+// import RecipeShowPage from './components/RecipeShowPage';
 import RecipeSearchPage from './components/RecipeSearchPage';
 import UserIngredientsPage from './components/UserIngredientsPage';
 import RecommendedRecipesPage from './components/RecommendedRecipesPage';

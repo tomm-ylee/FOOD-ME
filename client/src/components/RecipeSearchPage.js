@@ -14,6 +14,8 @@ class RecipeSearchPage extends React.Component {
       loading: true,
       page: 1
     }
+
+    this.seeRecipe = this.seeRecipe.bind(this)
   }
 
   componentDidMount() {
@@ -21,6 +23,15 @@ class RecipeSearchPage extends React.Component {
 
     Recipe.search(searchPhrase).then(data => {
       this.setState({ recipes: data.recipes, loading: false })
+    })
+  }
+
+  seeRecipe(event) {
+    const { id } = event.currentTarget.dataset
+    Recipe.one(id).then(data => {
+      console.log(data.recipe_url);
+      const win = window.open(data.recipe_url, '_blank');
+      win.focus();
     })
   }
 
@@ -46,14 +57,12 @@ class RecipeSearchPage extends React.Component {
               {
                 this.state.recipes.map(
                   recipe => (
-                    <Card className="recipeCard" key={recipe.id}>
-                      <CardLink href={recipe.sourceUrl}>
-                        <CardImg top width="100%" src={recipe.image} />
-                        <CardImgOverlay className="flexContainer cardOverlay">
-                          <CardTitle className="favouriteButton"><FontAwesome name='start-o' size="2x" /></CardTitle>
-                          <CardTitle className="recipeTitle"><p>{recipe.title}</p></CardTitle>
-                        </CardImgOverlay>
-                      </CardLink>
+                    <Card className="recipeCard" key={recipe.id} data-id={recipe.id} onClick={this.seeRecipe}>
+                      <CardImg top width="100%" src={recipe.image} />
+                      <CardImgOverlay className="flexContainer cardOverlay">
+                        <CardTitle className="favouriteButton"><FontAwesome name='start-o' size="2x" /></CardTitle>
+                        <CardTitle className="recipeTitle"><p>{recipe.title}</p></CardTitle>
+                      </CardImgOverlay>
                     </Card>
                   )
                 )

@@ -48,6 +48,12 @@ main.HomePage > .backgroundDiv {
   border: none;
 }
 
+.ingredientsIndicators {
+  max-width: 350px;
+  margin: -15px 15px 0px 15px;
+  border: none;
+}
+
 .recipeCard img {
   width: 350px;
   height: auto
@@ -180,4 +186,13 @@ div.Select-menu {
   font-weight: bold;
   color: black;
   font-family: sans-serif;
+  margin-bottom: 0px;
+}
+
+.usedIngredients {
+  color: green;
+}
+
+.missedIngredients {
+  color: maroon;
 }
