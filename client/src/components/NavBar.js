@@ -1,12 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import RecipeSearch from './RecipeSearch'
 
 function NavBar(props) {
-  return (
+    return (
     <nav className="NavBar">
-      <NavLink exact to="/">🥙</NavLink>
-      {/* <NavLink exact to="/recipes/new">New Recipe</NavLink> */}
-      <NavLink exact to="/recipes">View All Recipes</NavLink>
+      <NavLink exact to="/">Home</NavLink>
+      <NavLink exact to="/ingredients">Your Ingredients</NavLink>
+      <NavLink exact to="/recipes">View Recipes</NavLink>
+      <div id="navSearchBar">
+        <RecipeSearch placeHoldText="Search a dish.." onSubmit={()=> {}} />
+      </div>
     </nav>
   )
 }

@@ -1,37 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import {
-  Card, CardGroup, CardImg, CardText, CardBody, CardTitle, Button
-} from 'reactstrap'
+import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap'
 
 import { Recipe } from '../lib/requests';
 
 class RecipeIndexPage extends React.Component {
   constructor (props) {
     super(props);
-
     this.state = {
       recipes: [],
       loading: true
     }
-
-    this.addRecipe = this.addRecipe.bind(this)
   }
 
   componentDidMount() {
     Recipe.all().then(recipes => {
-      this.setState({ recipes: recipes, loading: false })
-    })
-  }
-
-  addRecipe (newRecipe) {
-    const {recipes} = this.state;
-
-    this.setState({
-      recipes: [
-        newRecipe,
-        ...recipes
-      ]
+      this.setState({ recipes: recipes, loading: false });
     })
   }
 

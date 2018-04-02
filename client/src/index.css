@@ -2,7 +2,9 @@
 * {
   box-sizing: content-box;
 }
-
+.flexContainer {
+  display: flex;
+}
 .homeTitle {
   align-self: center;
   border-radius: 6px;
@@ -32,16 +34,23 @@ main.HomePage > .backgroundDiv {
   font-family: 'Bitter';
 }
 
-.recipeCardList.content {
+.recipeCardList {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding: 0;
+  margin-bottom: 20px;
 }
 
 .recipeCard {
   max-width: 350px;
   margin: 15px;
+  border: none;
+}
+
+.ingredientsIndicators {
+  max-width: 350px;
+  margin: -15px 15px 0px 15px;
   border: none;
 }
 
@@ -74,8 +83,9 @@ main.HomePage > .backgroundDiv {
 
 .content {
   background-color: white;
-  margin: 0 300px;
+  margin: 0 150px;
   padding: 20px;
+  min-height: 80vh;
 }
 .recipeImage {
   max-width: 100%;
@@ -112,4 +122,99 @@ a {
 
 #homeSearch {
   margin-bottom: 200px;
+}
+
+div.Select-menu {
+  max-height: 700px;
+}
+
+.ingredientButton {
+  margin: 5px;
+  background-color: palegreen;
+  color: #114800;
+  border-color: #49EB49
+}
+
+.multiSelectButton {
+  margin-top: 10px;
+}
+
+.hoverX {
+  color: #114800;
+}
+
+.hidden {
+  display: none;
+}
+
+#navSearchBar {
+  margin-left: auto;
+}
+
+.form-group {
+  margin: 0;
+}
+
+.pageNumber {
+  flex-direction: column;
+  align-items: center;
+}
+
+.pageNumber > p {
+  margin: 0px
+}
+
+.card-img-overlay.cardOverlay {
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.cardOverlay > .favouriteButtons {
+padding: 4px;
+}
+
+.favouriteButtonBorder {
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 20px;
+  padding: 3px;
+  margin-right: 5px;
+  width: 60px;
+  height: 30px;
+}
+
+.cardOverlay > .recipeTitle {
+  height: 50px;
+  margin: 0;
+  padding: 10px;
+  background-color: rgba(0,100,70,0.8)
+}
+
+.cardOverlay > .recipeTitle p {
+  font-size: 16pt;
+  font-weight: bold;
+  color: black;
+  font-family: sans-serif;
+  margin-bottom: 0px;
+}
+
+.usedIngredients {
+  color: green;
+}
+
+.missedIngredients {
+  color: maroon;
+}
+
+#vegetarianCheckbox {
+  margin-left: 20px;
+}
+
+.userPageSection {
+  flex-direction: column;
+  align-items: stretch;
+  border: 2px solid grey;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px;
 }

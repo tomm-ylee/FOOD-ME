@@ -1,86 +1,95 @@
 const express = require('express');
-const request = require('request');
+const unirest = require('unirest');
 const knex = require('../db/knex');
 const router = express.Router();
 
-// RESOURCE ROUTES REQUIREMENT
-const commentsRouter = require('./comments');
-// MIDDLEWARE SETUP
-const app = express();
+const { indexSnap, searchSnap, showSnap } = require('../assets/apiSearches')
 
-// ROUTE REDIRECTIONS
-// app.use('/:id/comments', commentsRouter);
 
-FOOD2FOOK_DOMAIN = "http://food2fork.com/api/"
-API_KEY = "a6c0a0d863187bd15f40a0f7ecf370b0";
-// PATH: /recipes ACTION: INDEX
-router.get('/', function(req, res, next) {
-  console.log("Index");
-  knex.select().from('recipes').orderBy('created_at', 'DESC').then(recipes => {
-    res.json({recipes});
-  })
-});
+API_DOMAIN = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes"
+API_KEY = "Q1iCBBTOU9mshgVeyedEPiiWw2wpp1kYy7YjsnHkC4SHBJ7kds";
 
-// PATH: /recipes ACTION: SEARCH
-router.get('/search/:search', function(req, res, next) {
-  console.log("Search");
-  const search = req.params.search
-  request(
-    `${FOOD2FOOK_DOMAIN}/search?key=${API_KEY}&q=${search}`, // Use %20 for space, and use "," to separate ingredients
-    (err, apiResponse, data) => {
-      res.send(apiResponse.body)
-    }
-  )
-});
-
-// PATH: /recipes/:id ACTION: SHOW
-
-router.get('/:id', function(req, res, next) {
-  const recipeId = req.params.id;
-
-  knex.first().from('recipes').where({ id: recipeId }).then(recipe => {
-    return Promise.all([
-      knex.select().from('directions').where({ recipe_id: recipeId }).orderBy('step_number', 'ASC').then(directions => {
-        recipe.directions = directions;
-      }),
-      knex.select().from('usages').where({ recipe_id: recipeId }).then(usages => {
-        recipe.usages = usages;
-      })
-    ])
-      .then(() => res.json(recipe))
-  })
-});
-// router.get('/:id', function(req, res, next) {
-//   const recipeId = req.params.id;
-//   console.log("This is in the show action");
-//   request(
-//     `${FOOD2FOOK_DOMAIN}/get?key=${API_KEY}&rId=${recipeId}`,
-//     (err, apiResponse, data) => {
-//       res.send(apiResponse.body)
-//     }
-//   )
+// PATH: /recipes/search/:searchPhrase/:page/:diet ACTION: SEARCH
+router.get('/search/:searchPhrase/:page/:diet', function(req, res, next) {res.json(searchSnap)})
+// router.get('/search/:searchPhrase/:page/:diet', function(req, res, next) {
+//   const { searchPhrase, page, diet } = req.params
+//   const perPage = 12
+//   const offset = (page - 1) * perPage
+//
+//   let dietSpec = "";
+//   if (diet === "vegetarian") {
+//     console.log("In vegetarian");
+//     dietSpec = "&diet=vegetarian"
+//   } else if (diet === "vegan") {
+//     console.log("In vegan");
+//     dietSpec = "&diet=vegan"
+//   }
+//
+//   const searchURL = `${API_DOMAIN}/searchComplex?number=${perPage}&offset=${offset}&query=${searchPhrase}${dietSpec}`
+//   console.log("SearchURL is", searchURL);
+//   unirest.get(searchURL)
+//     .header("X-Mashape-Key", API_KEY)
+//     .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
+//     .end(result => {
+//       res.json({ recipes: result.body.results });
+//     });
 // });
 
-// PATH: /recipes ACTION: CREATE
-router.post('/', function(req, res, next) {
-  const { title, description, duration, directions, ingredients } = req.body
-  knex.insert({ title, description, duration }).into('recipes').returning('*').then(recipe => {
-    let directionsArray = []
-    for(let key in directions) {
-      directionsArray.push({ "step_number": key, "body": directions[key], "recipe_id": recipe[0].id });
-    }
+// PATH: /recipes/:user_id/:page ACTION: INDEX RECIPES
+router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
+// router.get('/:user_id/:page', function(req, res, next) {
+//   const { user_id, page} = req.params
+//   const perPage = 12
+//   const offset = (page - 1) * perPage
+//
+//   let ownages, user;
+//   return Promise.all([
+//     knex.select().from('ownages').where({ user_id }).orderBy('ingredient_name').then(data => {
+//       ownages = data
+//     }),
+//     knex.first().from('users').where({ id: user_id }).then(data => {
+//       user = data
+//     })
+//   ])
+//   .then(() => {
+//     const ingredients = ownages.map(ownage => ownage.ingredient_name).join('%2C').replace(/ /g, '+')
+//     const searchURL = `${API_DOMAIN}/findByIngredients?ingredients=${ingredients}&number=${perPage}&offset=${offset}&ranking=1&fillIngredients=true`
+//
+//     unirest.get(searchURL)
+//     .header("X-Mashape-Key", API_KEY)
+//     .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
+//     .end(result => {
+//       const recipes = result.body.map( recipe => {
+//         return {
+//           id: recipe.id,
+//           title: recipe.title,
+//           image: recipe.image,
+//           usedIngredientCount: recipe.usedIngredientCount,
+//           missedIngredientCount: recipe.missedIngredientCount,
+//           usedIngredients: recipe.usedIngredients.map(ingredient => ingredient.name),
+//           unusedIngredients: recipe.unusedIngredients.map(ingredient => ingredient.name),
+//           missedIngredients: recipe.missedIngredients.map(ingredient => ingredient.name)
+//         }
+//       })
+//       res.json({ recipes: recipes} );
+//     });
+//   })
+// });
 
-    let ingredientsArray = []
-    for(let key in ingredients) {
-      ingredientsArray.push({ "ingredient_name": key, "ingredient_id": ingredients[key]["id"], "quantity": ingredients[key]["quantity"], "unit": ingredients[key]["unit"], "recipe_id": recipe[0].id });
-    }
-
-    return Promise.all([
-      knex.insert(directionsArray).into('directions'),
-      knex.insert(ingredientsArray).into('usages')
-    ])
-      .then(() => res.json(recipe))
-  })
-});
+// PATH: /recipes/:id ACTION: SHOW
+router.get('/:id', function(req, res, next) {res.json(showSnap)})
+// router.get('/:id', function(req, res, next) {
+//   const recipeId = req.params.id;
+//
+//   const searchURL = `${API_DOMAIN}/${recipeId}/information`
+//
+//   unirest.get(searchURL)
+//     .header("X-Mashape-Key", API_KEY)
+//     .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
+//     .end(result => {
+//       console.log(result.body, result.status);
+//       res.json({ recipe_url: result.body.sourceUrl });
+//     });
+// });
 
 module.exports = router;

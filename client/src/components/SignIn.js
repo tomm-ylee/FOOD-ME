@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label } from 'reactstrap';
 
 function SignIn(props) {
-    const handleSubmit = event => {
-      event.preventDefault();
-      const formData = new FormData(event.currentTarget);
+  const handleSubmit = event => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
 
-      props.onSubmit({
-        email: formData.get('email'),
-        password: formData.get('password')
-      })
-    }
+    props.onSubmit({
+      email: formData.get('email'),
+      password: formData.get('password')
+    })
+  }
   return (
     <Form onSubmit={handleSubmit}>
       <Button>Sign In</Button> <Link to='' onClick={props.signUpClick}>Sign Up</Link> <br/>

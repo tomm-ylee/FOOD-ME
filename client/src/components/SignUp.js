@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label } from 'reactstrap';
 
 function SignUp(props) {
     const handleSubmit = event => {
@@ -8,6 +8,7 @@ function SignUp(props) {
       const formData = new FormData(event.currentTarget);
 
       props.onSubmit({
+        username: formData.get('username'),
         email: formData.get('email'),
         password: formData.get('password'),
         password_confirmation: formData.get('password_confirmation')
@@ -16,6 +17,11 @@ function SignUp(props) {
   return (
     <Form onSubmit={handleSubmit}>
       <Link to='' onClick={props.signInClick}>Sign In</Link> <Button>Sign Up</Button>  <br/>
+      <FormGroup>
+        <Label for='username'>Username</Label> <br />
+        <input type='input' id='username' name='username'/>
+      </FormGroup>
+
       <FormGroup>
         <Label for='email'>Email</Label> <br />
         <input type='email' id='email' name='email'/>
