@@ -62,7 +62,7 @@ class RecommendedRecipesPage extends React.Component {
     page += 1
     Recipe.all(user_id, page).then(data => {
       if (data) {
-        this.setState({ recipes: data.recipes, loading: false })
+        this.setState({ recipes: data.recipes, page: page })
       }
     })
   }
@@ -72,7 +72,7 @@ class RecommendedRecipesPage extends React.Component {
     if (page > 1) page -= 1
     Recipe.all(user_id, page).then(data => {
       if (data) {
-        this.setState({ recipes: data.recipes, loading: false })
+        this.setState({ recipes: data.recipes, page: page })
       }
     })
   }
@@ -174,7 +174,7 @@ class RecommendedRecipesPage extends React.Component {
                             Used Ingredients: {recipe.usedIngredientCount}
                           </small><br/>
                           <Popover placement="right" isOpen={popState[`used-${i}`]} target={`used-${i}`} toggle={this.toggle}>
-                            <PopoverBody className="usedIngredients">{recipe.usedIngredients.join(',')}</PopoverBody>
+                            <PopoverBody className="usedIngredients">{recipe.usedIngredients.join(', ')}</PopoverBody>
                           </Popover>
                         </div>
                         <div className="missedIngredients">
@@ -188,7 +188,7 @@ class RecommendedRecipesPage extends React.Component {
                           </div>
                           <br/>
                           <Popover className="missedIngredients" placement="right" isOpen={popState[`missed-${i}`]} target={`missed-${i}`} toggle={this.toggle}>
-                            <PopoverBody>{recipe.missedIngredients.join(',')}</PopoverBody>
+                            <PopoverBody>{recipe.missedIngredients.join(', ')}</PopoverBody>
                           </Popover>
                           <Popover className="addFinished" placement="bottom" isOpen={popState[`added-${i}`]} target={`added-${i}`} toggle={this.toggle}>
                             <PopoverBody>Added</PopoverBody>

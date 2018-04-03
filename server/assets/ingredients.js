@@ -1,3 +1,10 @@
+const basics = [
+  'salt',
+  'sugar',
+  'black pepper',
+  'vegetable oil'
+]
+
 const vegetables = [
   'onion',
   'garlic',
@@ -445,4 +452,4 @@ const fruits = [
   'crabapples'
 ]
 
-module.exports = { vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits }
+module.exports = { basics, vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits }

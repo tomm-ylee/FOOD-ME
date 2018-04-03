@@ -113,17 +113,17 @@ router.get('/:user_id/:page', function(req, res, next) {
 
 // PATH: /recipes/:id ACTION: SHOW
 router.get('/:id', function(req, res, next) {res.json(showSnap)})
-// router.get('/:id', function(req, res, next) {
-//   const recipeId = req.params.id;
-//
-//   const searchURL = `${API_DOMAIN}/${recipeId}/information`
-//
-//   unirest.get(searchURL)
-//     .header("X-Mashape-Key", API_KEY)
-//     .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
-//     .end(result => {
-//       res.json({ recipe_url: result.body.sourceUrl });
-//     });
-// });
+router.get('/:id', function(req, res, next) {
+  const recipeId = req.params.id;
+
+  const searchURL = `${API_DOMAIN}/${recipeId}/information`
+
+  unirest.get(searchURL)
+    .header("X-Mashape-Key", API_KEY)
+    .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
+    .end(result => {
+      res.json({ recipe_url: result.body.sourceUrl });
+    });
+});
 
 module.exports = router;

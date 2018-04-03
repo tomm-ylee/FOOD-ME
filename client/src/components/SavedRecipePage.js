@@ -11,9 +11,10 @@ class SavedRecipePage extends React.Component {
     const user_id = localStorage.getItem('user');
 
     this.state = {
+      user_id: user_id,
       favourites: [],
       completes: [],
-      user_id: user_id,
+      popState: {},
       loading: true,
       view: "1"
     }
@@ -22,6 +23,7 @@ class SavedRecipePage extends React.Component {
     this.updateComplete = this.updateComplete.bind(this);
     this.changeView = this.changeView.bind(this);
     this.seeRecipe = this.seeRecipe.bind(this);
+    this.updatePopstate = this.updatePopstate.bind(this);
   }
 
   componentDidMount() {
@@ -80,8 +82,16 @@ class SavedRecipePage extends React.Component {
     })
   }
 
+  updatePopstate(params) {
+    const { favourite_id, setTo } = params
+    const { popState } = this.state
+    popState[favourite_id] = setTo
+
+    this.setState({ popState: popState })
+  }
+
   render() {
-    const { loading, favourites, completes, view } = this.state;
+    const { loading, favourites, completes, view, popState } = this.state;
 
     if (loading) {
       return (
@@ -100,14 +110,14 @@ class SavedRecipePage extends React.Component {
         >
           <div className="backgroundDiv">
             <div className="content">
-              <Button className="btn-outline-dark savedRecipeButton" data-view="1" onClick={this.changeView}>
+              <Button className={`${view === "1" ? "btn-dark" : "btn-outline-dark"} savedRecipeButton`} data-view="1" onClick={this.changeView}>
                 Starred
               </Button>
 
-              <Button className="btn-outline-dark savedRecipeButton" data-view="2" onClick={this.changeView}>
+              <Button className={`${view === "2" ? "btn-dark" : "btn-outline-dark"} savedRecipeButton`} data-view="2" onClick={this.changeView}>
                 Completed
               </Button>
-              { view === "1" ? <FavouriteRecipes goSeeRecipe={this.seeRecipe} goUnfavourite={this.destroyFavourite} favourites={favourites}/> : null }
+              { view === "1" ? <FavouriteRecipes popState={popState} goSeeRecipe={this.seeRecipe} goUnfavourite={this.destroyFavourite} goTogglePop={this.updatePopstate} favourites={favourites}/> : null }
               { view === "2" ? <CompletedRecipes goSeeRecipe={this.seeRecipe} goUncomplete={this.destroyComplete} goRecomplete={this.updateComplete} completes={completes}/> : null }
             </div>
           </div>

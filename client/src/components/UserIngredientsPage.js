@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Button } from 'reactstrap'
 import { Ingredient, User, Ownage, ToBuy } from '../lib/requests';
 import MultiSelectField from './MultiSelectField';
+import DefaultPrompt from './DefaultPrompt';
 
 class UserIngredientsPage extends React.Component {
   constructor (props) {
@@ -16,6 +17,7 @@ class UserIngredientsPage extends React.Component {
       user: [],
       user_id: user_id,
       fieldValue: [],
+      defaultPop: false,
       loading: true
     }
     this.updateFieldValue = this.updateFieldValue.bind(this)
@@ -23,6 +25,8 @@ class UserIngredientsPage extends React.Component {
     this.xClick = this.xClick.bind(this)
     this.xEnter = this.xEnter.bind(this)
     this.xLeave = this.xLeave.bind(this)
+
+    this.toggleDefaultPop = this.toggleDefaultPop.bind(this)
 
     this.updateFieldValueShop = this.updateFieldValueShop.bind(this)
     this.addIngredientsShop = this.addIngredientsShop.bind(this)
@@ -99,8 +103,12 @@ class UserIngredientsPage extends React.Component {
     deleteX.classList.remove('hoverX');
   }
 
+  toggleDefaultPop() {
+    this.setState({ defaultPop:!this.state.defaultPop })
+  }
+
   render() {
-    const { loading, user, fieldValue, fieldValueShop, ingredients, ownages, to_buys } = this.state
+    const { loading, user, fieldValue, fieldValueShop, ingredients, ownages, to_buys, defaultPop } = this.state
 
     if (loading) {
       return (
@@ -119,7 +127,7 @@ class UserIngredientsPage extends React.Component {
         >
           <div className="backgroundDiv">
             <div className="content">
-              <h1 className="centerHeader">{user.username}'s Settings</h1>
+              <h1 className="centerHeader">{user.username}'s ingredients</h1>
               <Row>
                 <Col>
                   <Row className="userPageSection">
@@ -135,7 +143,21 @@ class UserIngredientsPage extends React.Component {
                 </Col>
                 <Col>
                   <h3 className="centerHeader"> See Your Ingredients: </h3>
-                  { ownages.length === 0 ? <p>Tell us what you have!</p> : null }
+                  {
+                    ownages.length === 0
+                    ?
+                    <p>
+                      {`Tell us what you have!  `}
+                      <DefaultPrompt
+                        basics={ingredients.basics}
+                        defaultPop={defaultPop}
+                        goAddDefaults={this.addIngredients}
+                        goToggleDefaultPop={this.toggleDefaultPop}
+                      />
+                    </p>
+                    :
+                    null
+                  }
                   <div className="userIngredientList">
                     {
                       ownages.map((ownage, i) => (

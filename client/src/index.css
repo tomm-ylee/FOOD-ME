@@ -197,9 +197,8 @@ padding: 4px;
 }
 
 .cardOverlay > .recipeTitle p {
-  font-size: 16pt;
-  font-weight: bold;
-  color: black;
+  font-size: 14pt;
+  color: #DFF1EC;
   font-family: sans-serif;
   margin-bottom: 0px;
 }
@@ -257,4 +256,25 @@ padding: 4px;
 
 .missed {
   justify-content: space-between;
+}
+
+.signButton {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.defaultPromptBody {
+  width: 1000px;
+}
+
+.fa {
+  color: #DFF1EC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  margin: 2px 0 0 2px;
+  border-radius: 20px;
+  background-color: rgba(0,100,70,0.8);
 }
