@@ -14,7 +14,7 @@ function SignIn(props) {
   }
   return (
     <Form onSubmit={handleSubmit}>
-      <Button>Sign In</Button> <Link to='' onClick={props.signUpClick}>Sign Up</Link> <br/>
+      <Button>Sign In</Button> <Link className="signButton" to='' onClick={props.signUpClick}>Sign Up</Link> <br/>
       <FormGroup>
         <Label for='email'>Email</Label> <br />
         <input type='email' id='email' name='email'/>

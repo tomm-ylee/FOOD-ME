@@ -7,6 +7,7 @@ function NavBar(props) {
     <nav className="NavBar">
       <NavLink exact to="/">Home</NavLink>
       <NavLink exact to="/ingredients">Your Ingredients</NavLink>
+      <NavLink exact to="/saved">Saved Recipes</NavLink>
       <NavLink exact to="/recipes">View Recipes</NavLink>
       <div id="navSearchBar">
         <RecipeSearch placeHoldText="Search a dish.." onSubmit={()=> {}} />

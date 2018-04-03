@@ -16,7 +16,7 @@ function SignUp(props) {
     }
   return (
     <Form onSubmit={handleSubmit}>
-      <Link to='' onClick={props.signInClick}>Sign In</Link> <Button>Sign Up</Button>  <br/>
+      <Link className="signButton" to='' onClick={props.signInClick}>Sign In</Link> <Button>Sign Up</Button>  <br/>
       <FormGroup>
         <Label for='username'>Username</Label> <br />
         <input type='input' id='username' name='username'/>

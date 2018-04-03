@@ -1,7 +1,8 @@
 import React from 'react';
-import { Row, Col, Button, Input, Label } from 'reactstrap'
-import { Ingredient, User, Ownage } from '../lib/requests';
+import { Row, Col, Button } from 'reactstrap'
+import { Ingredient, User, Ownage, ToBuy } from '../lib/requests';
 import MultiSelectField from './MultiSelectField';
+import DefaultPrompt from './DefaultPrompt';
 
 class UserIngredientsPage extends React.Component {
   constructor (props) {
@@ -11,10 +12,12 @@ class UserIngredientsPage extends React.Component {
 
     this.state = {
       ingredients: [],
-      user_ownages: [],
+      ownages: [],
+      toBuys: [],
       user: [],
       user_id: user_id,
       fieldValue: [],
+      defaultPop: false,
       loading: true
     }
     this.updateFieldValue = this.updateFieldValue.bind(this)
@@ -22,6 +25,12 @@ class UserIngredientsPage extends React.Component {
     this.xClick = this.xClick.bind(this)
     this.xEnter = this.xEnter.bind(this)
     this.xLeave = this.xLeave.bind(this)
+
+    this.toggleDefaultPop = this.toggleDefaultPop.bind(this)
+
+    this.updateFieldValueShop = this.updateFieldValueShop.bind(this)
+    this.addIngredientsShop = this.addIngredientsShop.bind(this)
+    this.xClickShop = this.xClickShop.bind(this)
   }
 
   componentDidMount() {
@@ -34,8 +43,11 @@ class UserIngredientsPage extends React.Component {
       User.one(user_id).then(user => {
         this.setState({ user: user });
       }),
-      Ownage.all(user_id).then(user_ownages => {
-        this.setState({ user_ownages });
+      Ownage.all(user_id).then(ownages => {
+        this.setState({ ownages });
+      }),
+      ToBuy.all(user_id).then(to_buys => {
+        this.setState({ to_buys });
       })
     ])
       .then(() => this.setState({ loading: false }))
@@ -47,8 +59,8 @@ class UserIngredientsPage extends React.Component {
 
   addIngredients(selectParams) {
     const { user_id } = this.state;
-    Ownage.create(selectParams, user_id).then(user_ownages => {
-      this.setState({ user_ownages: user_ownages, fieldValue: [] })
+    Ownage.create(selectParams, user_id).then(ownages => {
+      this.setState({ ownages: ownages, fieldValue: [] })
     })
   }
 
@@ -56,8 +68,28 @@ class UserIngredientsPage extends React.Component {
     const { user_id } = this.state;
     const ownage_id = event.currentTarget.dataset.id;
 
-    Ownage.destroy(user_id, ownage_id).then(user_ownages => {
-      this.setState({ user_ownages: user_ownages })
+    Ownage.destroy(user_id, ownage_id).then(ownages => {
+      this.setState({ ownages })
+    })
+  }
+
+  updateFieldValueShop(fieldValueShop) {
+    this.setState({ fieldValueShop })
+  }
+
+  addIngredientsShop(selectParams) {
+    const { user_id } = this.state;
+    ToBuy.create(selectParams, user_id).then(to_buys => {
+      this.setState({ to_buys: to_buys, fieldValueShop: [] })
+    })
+  }
+
+  xClickShop(event) {
+    const { user_id } = this.state;
+    const to_buy_id = event.currentTarget.dataset.id;
+
+    ToBuy.destroy(user_id, to_buy_id).then(to_buys => {
+      this.setState({ to_buys })
     })
   }
 
@@ -71,8 +103,12 @@ class UserIngredientsPage extends React.Component {
     deleteX.classList.remove('hoverX');
   }
 
+  toggleDefaultPop() {
+    this.setState({ defaultPop:!this.state.defaultPop })
+  }
+
   render() {
-    const { loading, user, fieldValue, ingredients, user_ownages } = this.state
+    const { loading, user, fieldValue, fieldValueShop, ingredients, ownages, to_buys, defaultPop } = this.state
 
     if (loading) {
       return (
@@ -91,7 +127,7 @@ class UserIngredientsPage extends React.Component {
         >
           <div className="backgroundDiv">
             <div className="content">
-              <h1 className="centerHeader">{user.username}'s Settings</h1>
+              <h1 className="centerHeader">{user.username}'s ingredients</h1>
               <Row>
                 <Col>
                   <Row className="userPageSection">
@@ -107,10 +143,24 @@ class UserIngredientsPage extends React.Component {
                 </Col>
                 <Col>
                   <h3 className="centerHeader"> See Your Ingredients: </h3>
-                  { user_ownages.length === 0 ? <p>Tell us what you have!</p> : null }
+                  {
+                    ownages.length === 0
+                    ?
+                    <p>
+                      {`Tell us what you have!  `}
+                      <DefaultPrompt
+                        basics={ingredients.basics}
+                        defaultPop={defaultPop}
+                        goAddDefaults={this.addIngredients}
+                        goToggleDefaultPop={this.toggleDefaultPop}
+                      />
+                    </p>
+                    :
+                    null
+                  }
                   <div className="userIngredientList">
                     {
-                      user_ownages.map((ownage, i) => (
+                      ownages.map((ownage, i) => (
                         <Button key={ownage.id} data-id={ownage.id} className="ingredientButton">
                           <small
                             data-id={ownage.id}
@@ -121,6 +171,41 @@ class UserIngredientsPage extends React.Component {
                             ⓧ{' '}
                           </small>
                           {ownage.ingredient_name}
+                        </Button>
+                      ))
+                    }
+                  </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row className="userPageSection">
+                    <h3 className="centerHeader"> Add to Shopping List: </h3>
+                    <MultiSelectField
+                      ingredients={ingredients}
+                      value={fieldValueShop}
+                      onSelectChange={this.updateFieldValueShop}
+                      onSelectSubmit={this.addIngredientsShop}
+                    />
+                  </Row>
+
+                </Col>
+                <Col>
+                  <h3 className="centerHeader"> Shopping List: </h3>
+                  { to_buys.length === 0 ? <p>Tell us what you want!</p> : null }
+                  <div className="userIngredientList">
+                    {
+                      to_buys.map((to_buy, i) => (
+                        <Button key={to_buy.id} data-id={to_buy.id} className="ingredientButton toBuy">
+                          <small
+                            data-id={to_buy.id}
+                            onClick={this.xClickShop}
+                            onMouseEnter={this.xEnter}
+                            onMouseLeave={this.xLeave}
+                          >
+                            ⓧ{' '}
+                          </small>
+                          {to_buy.ingredient_name}
                         </Button>
                       ))
                     }

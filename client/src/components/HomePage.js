@@ -1,7 +1,7 @@
 // Import Libraries
 import React, { Component } from 'react';
-import { Jumbotron, Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
-
+import { Jumbotron, Button } from 'reactstrap'
+import { Link } from 'react-router-dom'
 // Import Requests
 import { Token, User } from '../lib/requests';
 
@@ -20,6 +20,8 @@ class HomePage extends Component {
     }
     this.createToken = this.createToken.bind(this);
     this.createUser = this.createUser.bind(this);
+    this.makeGuest = this.makeGuest.bind(this);
+
     this.toSignUp = this.toSignUp.bind(this);
     this.toSignIn = this.toSignIn.bind(this);
     this.toSignOut = this.toSignOut.bind(this);
@@ -28,7 +30,11 @@ class HomePage extends Component {
   componentDidMount() {
     const user = localStorage.getItem("user")
     if (user) this.setState({ form: "signOut"})
-    // document.querySelector("nav.NavBar").classList.add("hidden")
+    document.querySelector("nav.NavBar").classList.add("hidden")
+  }
+
+  componentWillUnmount() {
+    document.querySelector("nav.NavBar").classList.remove("hidden")
   }
 
   createToken(logInParams) {
@@ -40,7 +46,7 @@ class HomePage extends Component {
           localStorage.setItem('user', data.id );
           this.setState({ form: "signOut" });
           onSignIn()
-          this.props.history.push(`/ingredients/${data.id}`);
+          this.props.history.push(`/ingredients`);
         } else {
           this.setState({
             errors: [{
@@ -61,7 +67,7 @@ class HomePage extends Component {
           localStorage.setItem('user', data.id );
           this.setState({ form: "signOut" })
           onSignIn()
-          this.props.history.push(`/ingredients/${data.id}`);
+          this.props.history.push(`/ingredients`);
         } else {
           this.setState({
             errors: [{
@@ -70,6 +76,16 @@ class HomePage extends Component {
           })
         }
       })
+  }
+
+  makeGuest(event) {
+    event.preventDefault();
+    this.createUser({
+      username: "guest",
+      email: `guest-  ${Date.now()}@foodme.ca`,
+      password: "tester",
+      password_confirmation: "tester"
+    })
   }
 
   toSignUp() {
@@ -103,9 +119,27 @@ class HomePage extends Component {
             <p>Already Have Something In Mind?</p>
             <RecipeSearch id="homeSearchBar" placeHoldText="Search for any dish.."/>
             <hr/>
+            {
+              form === "signIn" || form === "signUp"
+              ?
+              <Link to="/" onClick={this.makeGuest}>Continue as guest</Link>
+              :
+              null
+            }
             { form === "signIn" ? <SignIn signUpClick={this.toSignUp} onSubmit={this.createToken} /> : null }
             { form === "signUp" ? <SignUp signInClick={this.toSignIn} onSubmit={this.createUser} /> : null }
             { form === "signOut" ? <Button onClick={this.toSignOut}>Sign Out</Button> : null }
+            {
+              form === "signOut"
+              ?
+              <div>
+                <Link to="/ingredients">Your Ingredients</Link><br/>
+                <Link to="/saved">Saved Recipes</Link><br/>
+                <Link to="/recipes">View Recipes</Link><br/>
+              </div>
+              :
+              null
+            }
           </Jumbotron>
         </div>
       </main>

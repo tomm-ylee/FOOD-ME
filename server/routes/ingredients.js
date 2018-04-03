@@ -1,7 +1,7 @@
 const knex = require('../db/knex');
 const express = require('express');
 const router = express.Router();
-const { vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits } = require('../assets/ingredients')
+const { basics, vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits } = require('../assets/ingredients')
 
 // PATH: /ingredients ACTION: INDEX
 // router.get('/', function(req, res, next) {
@@ -14,7 +14,7 @@ const { vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, frui
 //     })
 // });
 router.get('/', function(req, res, next) {
-  const allIngredients = { vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits }
+  const allIngredients = { basics, vegetables, grains, meats, sauces, dairies, seafoods, oils, spices, fruits }
   res.json(allIngredients);
 });
 

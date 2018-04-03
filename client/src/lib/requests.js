@@ -1,3 +1,7 @@
+// Order of API request objects:
+"Ingredient, Ownage, Tobuy, Favourite, Complete, Recipe, User, Token"
+
+
 const DOMAIN = 'http://localhost:9000';
 
 // function getJWT() {
@@ -12,6 +16,7 @@ const Ingredient = {
       .then(res => res.json())
   }
 }
+
 const Ownage = {
   all(user_id) {
     return fetch(
@@ -47,6 +52,122 @@ const Ownage = {
   }
 }
 
+const ToBuy = {
+  all(user_id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/to_buys`,
+      {
+        // headers: { 'Authorization': getJWT() }
+      }
+    )
+      .then(res => res.json())
+  },
+  create(params, user_id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/to_buys`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(params)
+      }
+    )
+      .then(res => res.json())
+  },
+  destroy(user_id, id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/to_buys/${id}`,
+      {
+        method: 'DELETE',
+      }
+    )
+      .then(res => res.json())
+  }
+}
+
+const Favourite = {
+  all(user_id) {
+    return fetch(
+      `${DOMAIN}/favourites/${user_id}`,
+      {
+        // headers: { 'Authorization': getJWT() }
+      }
+    )
+      .then(res => res.json())
+  },
+  create(params) {
+    return fetch(
+      `${DOMAIN}/favourites`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(params)
+      }
+    )
+      .then(res => res.json())
+  },
+  destroy(id) {
+    return fetch(
+      `${DOMAIN}/favourites/${id}`,
+      {
+        method: 'DELETE',
+      }
+    )
+  }
+}
+
+const Complete = {
+  all(user_id) {
+    return fetch(
+      `${DOMAIN}/completes/${user_id}`,
+      {
+        // headers: { 'Authorization': getJWT() }
+      }
+    )
+      .then(res => res.json())
+  },
+  create(params) {
+    return fetch(
+      `${DOMAIN}/completes`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(params)
+      }
+    )
+      .then(res => res.json())
+  },
+  destroy(id) {
+    return fetch(
+      `${DOMAIN}/completes/${id}`,
+      {
+        method: 'DELETE',
+      }
+    )
+  },
+  update(params, id) {
+    return fetch(
+      `${DOMAIN}/completes/${id}`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'PATCH',
+        body: JSON.stringify(params)
+      }
+    )
+  }
+}
+
 const Recipe = {
   all(user_id, page) {
     return fetch(
@@ -62,9 +183,9 @@ const Recipe = {
     )
       .then(res => res.json());
   },
-  search(searchPhrase, page, diet) {
+  search(searchPhrase, page, diet, user_id) {
     return fetch(
-      `${DOMAIN}/recipes/search/${searchPhrase}/${page}/${diet}`,
+      `${DOMAIN}/recipes/search/${searchPhrase}/${page}/${diet}/${user_id}`,
       {}
     )
       .then(res => res.json())
@@ -126,4 +247,6 @@ const Token = {
 }
 
 
-export { Recipe, User, Token, Ingredient, Ownage };
+export {
+  Ingredient, Ownage, ToBuy, Favourite, Complete, Recipe, User, Token
+};
