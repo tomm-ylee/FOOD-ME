@@ -53,7 +53,7 @@ router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next
 });
 
 // PATH: /recipes/:user_id/:page ACTION: INDEX RECIPES
-// router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
+router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
 router.get('/:user_id/:page', function(req, res, next) {
   const { user_id, page} = req.params
   const perPage = 9

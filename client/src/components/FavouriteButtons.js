@@ -10,7 +10,7 @@ function FavouriteButtons(props) {
     onFavourite({
       recipe_id: recipe.id,
       recipe_title: recipe.title,
-      image: recipe.title
+      image: recipe.image
     });
   }
 
@@ -28,7 +28,7 @@ function FavouriteButtons(props) {
     onComplete({
       recipe_id: recipe.id,
       recipe_title: recipe.title,
-      image: recipe.title
+      image: recipe.image
     });
   }
 

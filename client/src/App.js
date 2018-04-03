@@ -10,11 +10,10 @@ import {  } from './lib/requests'
 import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
 import NotFoundPage from './components/NotFoundPage';
-// import RecipeIndexPage from './components/RecipeIndexPage';
-// import RecipeShowPage from './components/RecipeShowPage';
 import RecipeSearchPage from './components/RecipeSearchPage';
 import UserIngredientsPage from './components/UserIngredientsPage';
 import RecommendedRecipesPage from './components/RecommendedRecipesPage';
+import SavedRecipePage from './components/SavedRecipePage';
 
 class App extends Component {
   constructor(props) {
@@ -70,6 +69,10 @@ class App extends Component {
             <Route
               exact path="/ingredients"
               render={ props => (<UserIngredientsPage {...props} user={user}/>) }
+            />
+            <Route
+              exact path="/saved"
+              render={ props => (<SavedRecipePage {...props} user={user}/>) }
             />
             <Route
               exact path="/recipes"

@@ -31,7 +31,6 @@ router.delete('/:id', function(req, res, next) {
 router.patch('/:id', function(req, res, next) {
   const { notes } = req.body
   const { id } = req.params
-
   knex('completes').where({ id }).update({ notes }).returning('*').then(complete => {
     res.json(complete[0]);
   })

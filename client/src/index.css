@@ -218,3 +218,7 @@ padding: 4px;
   padding: 20px;
   margin: 10px;
 }
+
+.savedRecipes.flexContainer {
+  flex-direction: column;
+}
