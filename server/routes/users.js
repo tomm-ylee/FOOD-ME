@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
   const userId = req.params.id;
 
-  knex.first().from('users').where( {id: userId}).then(user => {
+  knex.first().from('users').where({ id: userId }).then(user => {
     res.json(user);
   });
 });

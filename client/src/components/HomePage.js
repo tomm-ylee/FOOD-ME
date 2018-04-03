@@ -1,6 +1,6 @@
 // Import Libraries
 import React, { Component } from 'react';
-import { Jumbotron, Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
+import { Jumbotron, Button } from 'reactstrap'
 
 // Import Requests
 import { Token, User } from '../lib/requests';

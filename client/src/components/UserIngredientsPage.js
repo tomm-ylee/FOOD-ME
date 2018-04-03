@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Input, Label } from 'reactstrap'
+import { Row, Col, Button } from 'reactstrap'
 import { Ingredient, User, Ownage } from '../lib/requests';
 import MultiSelectField from './MultiSelectField';
 

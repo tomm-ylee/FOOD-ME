@@ -62,9 +62,9 @@ const Favourite = {
     )
       .then(res => res.json())
   },
-  create(params, user_id) {
+  create(params) {
     return fetch(
-      `${DOMAIN}/favourites/${user_id}`,
+      `${DOMAIN}/favourites`,
       {
         headers: {
           // 'Authorization': getJWT(),
@@ -96,9 +96,9 @@ const Complete = {
     )
       .then(res => res.json())
   },
-  create(params, user_id) {
+  create(params) {
     return fetch(
-      `${DOMAIN}/completes/${user_id}`,
+      `${DOMAIN}/completes`,
       {
         headers: {
           // 'Authorization': getJWT(),
@@ -148,9 +148,9 @@ const Recipe = {
     )
       .then(res => res.json());
   },
-  search(searchPhrase, page, diet) {
+  search(searchPhrase, page, diet, user_id) {
     return fetch(
-      `${DOMAIN}/recipes/search/${searchPhrase}/${page}/${diet}`,
+      `${DOMAIN}/recipes/search/${searchPhrase}/${page}/${diet}/${user_id}`,
       {}
     )
       .then(res => res.json())
@@ -212,4 +212,6 @@ const Token = {
 }
 
 
-export { Recipe, User, Token, Ingredient, Ownage };
+export {
+  Ingredient, Ownage, Favourite, Complete, Recipe, User, Token
+};

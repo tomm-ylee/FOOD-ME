@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card, CardImg, CardTitle, CardImgOverlay, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
-import FontAwesome from 'react-fontawesome';
-import { Recipe } from '../lib/requests';
+import { Card, CardImg, CardTitle, CardImgOverlay, Popover, PopoverBody } from 'reactstrap';
+import { Recipe, Favourite, Complete } from '../lib/requests';
 
 import PageNumber from './PageNumber.js'
+import FavouriteButtons from './FavouriteButtons.js'
 
 class RecommendedRecipesPage extends React.Component {
   constructor (props) {
@@ -24,6 +24,10 @@ class RecommendedRecipesPage extends React.Component {
     this.popOut = this.popOut.bind(this)
     this.upPage = this.upPage.bind(this)
     this.downPage = this.downPage.bind(this)
+
+    this.createFavourite = this.createFavourite.bind(this)
+    this.destroyFavourite = this.destroyFavourite.bind(this)
+    this.createComplete = this.createComplete.bind(this)
   }
 
   componentDidMount() {
@@ -69,7 +73,6 @@ class RecommendedRecipesPage extends React.Component {
         this.setState({ recipes: data.recipes, loading: false })
       }
     })
-
   }
 
   seeRecipe(event) {
@@ -77,6 +80,36 @@ class RecommendedRecipesPage extends React.Component {
     Recipe.one(id).then(data => {
       const win = window.open(data.recipe_url, '_blank');
       win.focus();
+    })
+  }
+
+  createFavourite(params) {
+    const { user_id, recipes } = this.state
+    const { recipe_id, recipe_title, image } = params
+    Favourite.create({ user_id, recipe_id, recipe_title, image }).then(favourite => {
+      const recipeIndex = recipes.findIndex(recipe => recipe.id === recipe_id);
+      recipes[recipeIndex].favourite_id = favourite.id
+      this.setState({ recipes })
+    })
+  }
+
+  destroyFavourite(params) {
+    const { recipes } = this.state
+    const { recipe_id, favourite_id } = params
+    Favourite.destroy(favourite_id).then(() => {
+      const recipeIndex = recipes.findIndex(recipe => recipe.id === recipe_id);
+      recipes[recipeIndex].favourite_id = null;
+      this.setState({ recipes });
+    })
+  }
+
+  createComplete(params) {
+    const { user_id, recipes } = this.state
+    const { recipe_id, recipe_title, image } = params
+    Complete.create({ user_id, recipe_id, recipe_title, image }).then(complete => {
+      const recipeIndex = recipes.findIndex(recipe => recipe.id === recipe_id);
+      recipes[recipeIndex].complete_id = complete.id
+      this.setState({ recipes })
     })
   }
 
@@ -106,10 +139,12 @@ class RecommendedRecipesPage extends React.Component {
                       <Card className="recipeCard" data-id={recipe.id} onClick={this.seeRecipe}>
                           <CardImg top width="100%" src={recipe.image} />
                         <CardImgOverlay className="flexContainer cardOverlay">
-                          <CardTitle className="favouriteButtons">
-                            <FontAwesome name="star-o"/>
-                            <FontAwesome name="check-circle-o"/>
-                          </CardTitle>
+                          <FavouriteButtons
+                            recipe={recipe}
+                            onFavourite={this.createFavourite}
+                            onUnfavourite={this.destroyFavourite}
+                            onComplete={this.createComplete}
+                          />
                           <CardTitle className="recipeTitle"><p>{recipe.title}</p></CardTitle>
                         </CardImgOverlay>
                       </Card>

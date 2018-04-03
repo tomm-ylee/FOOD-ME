@@ -1,18 +1,22 @@
 import React from 'react';
-import { Card, CardImg, CardLink, CardTitle, CardImgOverlay } from 'reactstrap';
-import FontAwesome from 'react-fontawesome';
+import { Card, CardImg, CardTitle, CardImgOverlay } from 'reactstrap';
 import { Recipe, Favourite, Complete } from '../lib/requests';
 
 import PageNumber from './PageNumber.js'
+import FavouriteButtons from './FavouriteButtons.js'
 
 class RecipeSearchPage extends React.Component {
   constructor (props) {
     super(props);
+    // const user_id = props.user
+    const user_id = localStorage.getItem('user');
+
     this.state = {
       recipes: [],
       searchPhrase: this.props.match.params.search,
-      loading: true,
       diet: "none",
+      user_id: user_id,
+      loading: true,
       page: 1
     }
 
@@ -28,9 +32,9 @@ class RecipeSearchPage extends React.Component {
   }
 
   componentDidMount() {
-    const { searchPhrase, page, diet } = this.state
+    const { searchPhrase, page, diet, user_id } = this.state
 
-    Recipe.search(searchPhrase, page, diet).then(data => {
+    Recipe.search(searchPhrase, page, diet, user_id).then(data => {
       if (data) {
         this.setState({ recipes: data.recipes, loading: false })
       }
@@ -45,61 +49,74 @@ class RecipeSearchPage extends React.Component {
     })
   }
 
-
   toggleVegan() {
-    const { searchPhrase, page } = this.state;
+    const { searchPhrase, page, user_id } = this.state;
     let { diet } = this.state;
     diet = (diet === "vegan" ? "" : "vegan")
     this.setState({ diet })
 
-    Recipe.search(searchPhrase, page, diet).then(data => {
+    Recipe.search(searchPhrase, page, diet, user_id).then(data => {
       this.setState({ recipes: data.recipes })
     })
   }
 
   toggleVegetarian() {
-    const { searchPhrase, page } = this.state;
+    const { searchPhrase, page, user_id } = this.state;
     let { diet } = this.state;
     diet = (diet === "vegetarian" ? "" : "vegetarian")
     this.setState({ diet })
 
-    Recipe.search(searchPhrase, page, diet).then(data => {
+    Recipe.search(searchPhrase, page, diet, user_id).then(data => {
       this.setState({ recipes: data.recipes })
     })
   }
 
   upPage() {
-    let { searchPhrase, diet, page } = this.state;
+    let { searchPhrase, diet, page, user_id } = this.state;
     page += 1
 
-    Recipe.search(searchPhrase, page, diet).then(data => {
+    Recipe.search(searchPhrase, page, diet, user_id).then(data => {
       this.setState({ recipes: data.recipes, page: page })
     })
   }
 
   downPage() {
-    let { searchPhrase, diet, page } = this.state;
+    let { searchPhrase, diet, page, user_id } = this.state;
     if (page > 1) page -= 1
 
-    Recipe.search(searchPhrase, page, diet).then(data => {
+    Recipe.search(searchPhrase, page, diet, user_id).then(data => {
       this.setState({ recipes: data.recipes, page: page })
     })
   }
 
-  createFavourite(event) {
-
-  }
-
-  destroyFavourite(event) {
-    const { id } = event.currentTarget.dataset
-
-    Favourite.destroy(id).then(() => {
-      
+  createFavourite(params) {
+    const { user_id, recipes } = this.state
+    const { recipe_id, recipe_title, image } = params
+    Favourite.create({ user_id, recipe_id, recipe_title, image }).then(favourite => {
+      const recipeIndex = recipes.findIndex(recipe => recipe.id === recipe_id);
+      recipes[recipeIndex].favourite_id = favourite.id
+      this.setState({ recipes })
     })
   }
 
-  createComplete(event) {
+  destroyFavourite(params) {
+    const { recipes } = this.state
+    const { recipe_id, favourite_id } = params
+    Favourite.destroy(favourite_id).then(() => {
+      const recipeIndex = recipes.findIndex(recipe => recipe.id === recipe_id);
+      recipes[recipeIndex].favourite_id = null;
+      this.setState({ recipes });
+    })
+  }
 
+  createComplete(params) {
+    const { user_id, recipes } = this.state
+    const { recipe_id, recipe_title, image } = params
+    Complete.create({ user_id, recipe_id, recipe_title, image }).then(complete => {
+      const recipeIndex = recipes.findIndex(recipe => recipe.id === recipe_id);
+      recipes[recipeIndex].complete_id = complete.id
+      this.setState({ recipes })
+    })
   }
 
   render() {
@@ -133,10 +150,12 @@ class RecipeSearchPage extends React.Component {
                     <Card className="recipeCard" key={recipe.id} data-id={recipe.id} onClick={this.seeRecipe}>
                       <CardImg top width="100%" src={recipe.image} />
                       <CardImgOverlay className="flexContainer cardOverlay">
-                        <CardTitle className="favouriteButtons">
-                          <FontAwesome name="star-o"/>
-                          <FontAwesome name="check-circle-o"/>
-                        </CardTitle>
+                        <FavouriteButtons
+                          recipe={recipe}
+                          onFavourite={this.createFavourite}
+                          onUnfavourite={this.destroyFavourite}
+                          onComplete={this.createComplete}
+                        />
                         <CardTitle className="recipeTitle"><p>{recipe.title}</p></CardTitle>
                       </CardImgOverlay>
                     </Card>
