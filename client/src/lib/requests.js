@@ -1,5 +1,5 @@
 // Order of API request objects:
-"Ingredient, Ownage, Favourite, Complete, Recipe, User, Token"
+"Ingredient, Ownage, Tobuy, Favourite, Complete, Recipe, User, Token"
 
 
 const DOMAIN = 'http://localhost:9000';
@@ -44,6 +44,41 @@ const Ownage = {
   destroy(user_id, id) {
     return fetch(
       `${DOMAIN}/users/${user_id}/ownages/${id}`,
+      {
+        method: 'DELETE',
+      }
+    )
+      .then(res => res.json())
+  }
+}
+
+const ToBuy = {
+  all(user_id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/to_buys`,
+      {
+        // headers: { 'Authorization': getJWT() }
+      }
+    )
+      .then(res => res.json())
+  },
+  create(params, user_id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/to_buys`,
+      {
+        headers: {
+          // 'Authorization': getJWT(),
+          'Content-Type':'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(params)
+      }
+    )
+      .then(res => res.json())
+  },
+  destroy(user_id, id) {
+    return fetch(
+      `${DOMAIN}/users/${user_id}/to_buys/${id}`,
       {
         method: 'DELETE',
       }
@@ -213,5 +248,5 @@ const Token = {
 
 
 export {
-  Ingredient, Ownage, Favourite, Complete, Recipe, User, Token
+  Ingredient, Ownage, ToBuy, Favourite, Complete, Recipe, User, Token
 };

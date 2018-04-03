@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button, Card, CardImg, CardImgOverlay, CardTitle, Form, FormGroup, Input } from 'reactstrap'
+import { Button, Form, FormGroup, Input } from 'reactstrap'
 
 function CompletedRecipes(props) {
   const { completes, goUncomplete = () => {}, goRecomplete = () => {}, goSeeRecipe = () => {} } = props
@@ -18,41 +18,34 @@ function CompletedRecipes(props) {
   }
 
   const seeRecipe = event => {
-    goSeeRecipe({  })
+    const { recipe_id } = event.currentTarget.dataset;
+    goSeeRecipe({ recipe_id })
   }
 
-
-
   return (
-    <div className="CompletedRecipes flexContainer">
-      <Row>
-        <Col>
-          <h1 className="centerHeader">Previous Recipes</h1>
-          <div className="savedRecipes flexContainer">
-            {
-              completes.map(complete => (
-                <div key={complete.id} className="completeItem flexContainer">
-                  <Card className="recipeCard" data-id={complete.recipe_id} onClick={seeRecipe}>
-                    <CardImg top width="100%" src={complete.image} />
-                    <CardImgOverlay className="flexContainer cardOverlay">
-                      <div></div>
-                      <CardTitle className="recipeTitle"><p>{complete.recipe_title}</p></CardTitle>
-                    </CardImgOverlay>
-                  </Card>
-                  <Button data-complete_id={complete.id} onClick={uncompleteThis}>Uncomplete</Button>
-                  <Form data-complete_id={complete.id} onSubmit={addNote}>
-                    <FormGroup>
-                      <Input type="textarea" name="notes">{complete.notes}</Input>
-                    </FormGroup>
-                    <Button>Save</Button>
-                  </Form>
+    <div>
+      <h1 className="centerHeader">Completed Recipes</h1>
+      <div className="completedRecipes savedRecipes flexContainer">
+        {
+          completes.map(complete => (
+            <div key={complete.id} className="completeItem flexContainer">
+              <img className="savedImg" src={complete.image} onClick={seeRecipe} alt=""/>
+              <div>
+                <div>
+                  <span>{complete.recipe_title + "    "}</span>
+                  <Button data-complete_id={complete.id} onClick={uncompleteThis}>Remove</Button>
                 </div>
-              ))
-            }
-          </div>
-        </Col>
-      </Row>
-
+                <Form data-complete_id={complete.id} onSubmit={addNote}>
+                  <FormGroup>
+                    <Input type="textarea" className="notesTextarea" name="notes" defaultValue={complete.notes}></Input>
+                  </FormGroup>
+                  <Button>Save</Button>
+                </Form>
+              </div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   )
 }

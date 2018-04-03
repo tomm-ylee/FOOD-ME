@@ -40,7 +40,7 @@ class HomePage extends Component {
           localStorage.setItem('user', data.id );
           this.setState({ form: "signOut" });
           onSignIn()
-          this.props.history.push(`/ingredients/${data.id}`);
+          this.props.history.push(`/ingredients`);
         } else {
           this.setState({
             errors: [{
@@ -61,7 +61,7 @@ class HomePage extends Component {
           localStorage.setItem('user', data.id );
           this.setState({ form: "signOut" })
           onSignIn()
-          this.props.history.push(`/ingredients/${data.id}`);
+          this.props.history.push(`/ingredients`);
         } else {
           this.setState({
             errors: [{

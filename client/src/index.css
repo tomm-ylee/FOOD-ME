@@ -135,6 +135,12 @@ div.Select-menu {
   border-color: #49EB49
 }
 
+.ingredientButton.toBuy {
+  background-color: skyblue;
+  color: #002c48;
+  border-color: #4976eb;
+}
+
 .multiSelectButton {
   margin-top: 10px;
 }
@@ -202,7 +208,7 @@ padding: 4px;
   color: green;
 }
 
-.missedIngredients {
+.missedIngredients * {
   color: maroon;
 }
 
@@ -214,11 +220,41 @@ padding: 4px;
   flex-direction: column;
   align-items: stretch;
   border: 2px solid grey;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 20px;
   margin: 10px;
 }
 
-.savedRecipes.flexContainer {
+.completedRecipes.flexContainer {
   flex-direction: column;
+  align-items: center;
+  width: calc(100vw - 400px);
+}
+
+.favouriteItem, .completeItem {
+  border: 2px solid grey;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.savedImg {
+  height: 150px;
+  width: auto;
+  margin-right: 10px;
+  border: 5px solid rgba(0,100,70,0.8);
+}
+
+.notesTextarea {
+  margin: 10px 0px;
+  width: calc(100vw - 800px) ;
+}
+
+.savedRecipes button {
+  font-size: 10pt;
+  padding: 2px;
+}
+
+.missed {
+  justify-content: space-between;
 }

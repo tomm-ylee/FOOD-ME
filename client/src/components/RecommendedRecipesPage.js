@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardImg, CardTitle, CardImgOverlay, Popover, PopoverBody } from 'reactstrap';
-import { Recipe, Favourite, Complete } from '../lib/requests';
+import { Recipe, Favourite, Complete, ToBuy } from '../lib/requests';
 
 import PageNumber from './PageNumber.js'
 import FavouriteButtons from './FavouriteButtons.js'
@@ -28,6 +28,8 @@ class RecommendedRecipesPage extends React.Component {
     this.createFavourite = this.createFavourite.bind(this)
     this.destroyFavourite = this.destroyFavourite.bind(this)
     this.createComplete = this.createComplete.bind(this)
+
+    this.addToBuys = this.addToBuys.bind(this)
   }
 
   componentDidMount() {
@@ -104,12 +106,30 @@ class RecommendedRecipesPage extends React.Component {
   }
 
   createComplete(params) {
-    const { user_id, recipes } = this.state
-    const { recipe_id, recipe_title, image } = params
+    const { user_id, recipes } = this.state;
+    const { recipe_id, recipe_title, image } = params;
     Complete.create({ user_id, recipe_id, recipe_title, image }).then(complete => {
       const recipeIndex = recipes.findIndex(recipe => recipe.id === recipe_id);
-      recipes[recipeIndex].complete_id = complete.id
-      this.setState({ recipes })
+      recipes[recipeIndex].complete_id = complete.id;
+      this.setState({ recipes });
+    })
+  }
+
+  addToBuys(event) {
+    event.preventDefault();
+    const { user_id, recipes, popState } = this.state;
+    const { recipe_index, id } = event.currentTarget.dataset;
+
+    const toBuys = recipes[recipe_index].missedIngredients;
+
+    ToBuy.create({value: toBuys}, user_id).then(() => {
+      popState[id] = true;
+      this.setState({ popState: popState });
+
+      setTimeout(() => {
+        popState[id] = false;
+        this.setState({ popState: popState });
+      }, 500)
     })
   }
 
@@ -124,7 +144,7 @@ class RecommendedRecipesPage extends React.Component {
         </main>
       )
     } else {
-      const { page } = this.state
+      const { page, recipes, popState } = this.state
       return (
         <main
           className="RecommendedRecipesPage"
@@ -133,7 +153,7 @@ class RecommendedRecipesPage extends React.Component {
             <div className="content">
               <div className="recipeCardList">
               {
-                this.state.recipes.map(
+                recipes.map(
                   (recipe, i) => (
                     <div key={i}>
                       <Card className="recipeCard" data-id={recipe.id} onClick={this.seeRecipe}>
@@ -153,16 +173,25 @@ class RecommendedRecipesPage extends React.Component {
                           <small id={`used-${i}`} data-id={`used-${i}`} onMouseEnter={this.popIn} onMouseLeave={this.popOut}>
                             Used Ingredients: {recipe.usedIngredientCount}
                           </small><br/>
-                          <Popover placement="right" isOpen={this.state.popState[`used-${i}`]} target={`used-${i}`} toggle={this.toggle}>
+                          <Popover placement="right" isOpen={popState[`used-${i}`]} target={`used-${i}`} toggle={this.toggle}>
                             <PopoverBody className="usedIngredients">{recipe.usedIngredients.join(',')}</PopoverBody>
                           </Popover>
                         </div>
                         <div className="missedIngredients">
-                          <small id={`missed-${i}`} data-id={`missed-${i}`} onMouseEnter={this.popIn} onMouseLeave={this.popOut}>
-                            Missed Ingredients: {recipe.missedIngredientCount}
-                          </small><br/>
-                          <Popover placement="right" isOpen={this.state.popState[`missed-${i}`]} target={`missed-${i}`} toggle={this.toggle}>
-                            <PopoverBody className="missedIngredients">{recipe.missedIngredients.join(',')}</PopoverBody>
+                          <div className="missed flexContainer">
+                            <small id={`missed-${i}`} data-id={`missed-${i}`} onMouseEnter={this.popIn} onMouseLeave={this.popOut}>
+                              Missed Ingredients: {recipe.missedIngredientCount}
+                            </small>
+                            <small><a href="" id={`added-${i}`} data-id={`added-${i}`} data-recipe_index={i} onClick={this.addToBuys}>
+                              Add to Shop List
+                            </a></small>
+                          </div>
+                          <br/>
+                          <Popover className="missedIngredients" placement="right" isOpen={popState[`missed-${i}`]} target={`missed-${i}`} toggle={this.toggle}>
+                            <PopoverBody>{recipe.missedIngredients.join(',')}</PopoverBody>
+                          </Popover>
+                          <Popover className="addFinished" placement="bottom" isOpen={popState[`added-${i}`]} target={`added-${i}`} toggle={this.toggle}>
+                            <PopoverBody>Added</PopoverBody>
                           </Popover>
                         </div>
                       </div>
