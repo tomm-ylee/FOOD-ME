@@ -10,7 +10,7 @@ API_DOMAIN = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes
 API_KEY = "Q1iCBBTOU9mshgVeyedEPiiWw2wpp1kYy7YjsnHkC4SHBJ7kds";
 
 // PATH: /recipes/search/:searchPhrase/:page/:diet/:user_id ACTION: SEARCH
-router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next) {res.json(searchSnap)})
+// router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next) {res.json(searchSnap)})
 router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next) {
   const { searchPhrase, page, diet, user_id } = req.params
   const perPage = 9
@@ -53,7 +53,7 @@ router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next
 });
 
 // PATH: /recipes/:user_id/:page ACTION: INDEX RECIPES
-router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
+// router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
 router.get('/:user_id/:page', function(req, res, next) {
   const { user_id, page} = req.params
   const perPage = 9
@@ -112,7 +112,7 @@ router.get('/:user_id/:page', function(req, res, next) {
 });
 
 // PATH: /recipes/:id ACTION: SHOW
-router.get('/:id', function(req, res, next) {res.json(showSnap)})
+// router.get('/:id', function(req, res, next) {res.json(showSnap)})
 router.get('/:id', function(req, res, next) {
   const recipeId = req.params.id;
 
