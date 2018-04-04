@@ -4,6 +4,7 @@ import { Recipe, Favourite, Complete } from '../lib/requests';
 
 import PageNumber from './PageNumber.js'
 import FavouriteButtons from './FavouriteButtons.js'
+import LoadingLemon from './LoadingLemon.js'
 
 class RecipeSearchPage extends React.Component {
   constructor (props) {
@@ -52,7 +53,8 @@ class RecipeSearchPage extends React.Component {
   toggleVegan() {
     const { searchPhrase, page, user_id } = this.state;
     let { diet } = this.state;
-    diet = (diet === "vegan" ? "" : "vegan")
+    diet = (diet === "vegan" ? "none" : "vegan")
+    console.log(diet);
     this.setState({ diet })
 
     Recipe.search(searchPhrase, page, diet, user_id).then(data => {
@@ -63,7 +65,8 @@ class RecipeSearchPage extends React.Component {
   toggleVegetarian() {
     const { searchPhrase, page, user_id } = this.state;
     let { diet } = this.state;
-    diet = (diet === "vegetarian" ? "" : "vegetarian")
+    diet = (diet === "vegetarian" ? "none" : "vegetarian")
+    console.log(diet);
     this.setState({ diet })
 
     Recipe.search(searchPhrase, page, diet, user_id).then(data => {
@@ -122,19 +125,16 @@ class RecipeSearchPage extends React.Component {
   render() {
     if (this.state.loading) {
       return (
-        <main
-          className="RecipeSearchPage"
-          style={{margin: '0 1rem'}}
-        >
-          <p>loading..</p>
+        <main className="RecipeSearchPage">
+          <div className="backgroundDiv">
+            <LoadingLemon />
+          </div>
         </main>
       )
     } else {
       const { page, diet } = this.state
       return (
-        <main
-          className="RecipeSearchPage"
-        >
+        <main className="RecipeSearchPage">
           <div className="backgroundDiv">
             <div className="content">
               <div>

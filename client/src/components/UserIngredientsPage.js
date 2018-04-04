@@ -1,8 +1,10 @@
 import React from 'react';
 import { Row, Col, Button } from 'reactstrap'
 import { Ingredient, User, Ownage, ToBuy } from '../lib/requests';
+
 import MultiSelectField from './MultiSelectField';
 import DefaultPrompt from './DefaultPrompt';
+import LoadingLemon from './LoadingLemon';
 
 class UserIngredientsPage extends React.Component {
   constructor (props) {
@@ -112,19 +114,15 @@ class UserIngredientsPage extends React.Component {
 
     if (loading) {
       return (
-        <main
-          className="UserIngredientsPage containerFluid"
-        >
+        <main className="UserIngredientsPage containerFluid">
           <div className="backgroundDiv">
-            <p>loading..</p>
+            <LoadingLemon />
           </div>
         </main>
       )
     } else {
       return (
-        <main
-          className="UserIngredientsPage"
-        >
+        <main className="UserIngredientsPage">
           <div className="backgroundDiv">
             <div className="content">
               <h1 className="centerHeader">{user.username}'s ingredients</h1>

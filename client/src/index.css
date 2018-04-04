@@ -28,9 +28,9 @@ main.HomePage > .backgroundDiv {
 #signin-jumbotron {
   display: flex;
   flex-direction: column;
-  margin: 0 100px;
+  margin: auto 100px;
   width: 450px;
-  height:95vh;
+  height: 85vh;
   font-family: 'Bitter';
 }
 
@@ -83,10 +83,24 @@ main.HomePage > .backgroundDiv {
 
 .content {
   background-color: white;
-  margin: 0 150px;
+  margin: 0 200px;
   padding: 20px;
   min-height: 80vh;
 }
+.fa {
+  transition: all 2s;
+}
+.contentLemon {
+  margin: 0 200px;
+  padding: 20px;
+  color: yellow;
+  transition: all 1s;
+}
+
+.contentLemon.lime {
+  color: lime;
+}
+
 .recipeImage {
   max-width: 100%;
   height: auto;
@@ -227,7 +241,7 @@ padding: 4px;
 .completedRecipes.flexContainer {
   flex-direction: column;
   align-items: center;
-  width: calc(100vw - 400px);
+  width: 100%;
 }
 
 .favouriteItem, .completeItem {

@@ -4,6 +4,7 @@ import { Recipe, Favourite, Complete, ToBuy } from '../lib/requests';
 
 import PageNumber from './PageNumber.js'
 import FavouriteButtons from './FavouriteButtons.js'
+import LoadingLemon from './LoadingLemon.js'
 
 class RecommendedRecipesPage extends React.Component {
   constructor (props) {
@@ -136,19 +137,16 @@ class RecommendedRecipesPage extends React.Component {
   render() {
     if (this.state.loading) {
       return (
-        <main
-          className="RecommendedRecipesPage"
-          style={{margin: '0 1rem'}}
-        >
-          <p>loading..</p>
+        <main className="RecommendedRecipesPage">
+          <div className="backgroundDiv">
+            <LoadingLemon />
+          </div>
         </main>
       )
     } else {
       const { page, recipes, popState } = this.state
       return (
-        <main
-          className="RecommendedRecipesPage"
-        >
+        <main className="RecommendedRecipesPage">
           <div className="backgroundDiv">
             <div className="content">
               <div className="recipeCardList">

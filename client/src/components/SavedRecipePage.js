@@ -3,6 +3,7 @@ import { Favourite, Complete, Recipe } from '../lib/requests';
 import { Button } from 'reactstrap'
 import FavouriteRecipes from './FavouriteRecipes';
 import CompletedRecipes from './CompletedRecipes';
+import LoadingLemon from './LoadingLemon';
 
 class SavedRecipePage extends React.Component {
   constructor (props) {
@@ -95,19 +96,15 @@ class SavedRecipePage extends React.Component {
 
     if (loading) {
       return (
-        <main
-          className="SavedRecipePage containerFluid"
-        >
+        <main className="SavedRecipePage containerFluid">
           <div className="backgroundDiv">
-            <p>loading..</p>
+            <LoadingLemon />
           </div>
         </main>
       )
     } else {
       return (
-        <main
-          className="SavedRecipePage"
-        >
+        <main className="SavedRecipePage">
           <div className="backgroundDiv">
             <div className="content">
               <Button className={`${view === "1" ? "btn-dark" : "btn-outline-dark"} savedRecipeButton`} data-view="1" onClick={this.changeView}>
