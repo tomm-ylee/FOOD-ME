@@ -13,7 +13,7 @@ function LoadingLemon() {
     }, 1500)
   }
 
-  toggleFruit()
+  setTimeout(toggleFruit(), 500)
 
 
   return (

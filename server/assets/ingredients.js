@@ -291,18 +291,18 @@ const dairies = [
   'butter',
   'eggs',
   'milk',
-  'parmesan',
-  'cheddar',
+  'parmesan cheese',
+  'cheddar cheese',
   'american cheese',
   'sour cream',
   'cream cheese',
-  'mozzarella',
+  'mozzarella cheese',
   'yogurt',
   'cream',
   'evaporated milk',
   'whipped cream',
   'half and half',
-  'feta',
+  'feta cheese',
   'monterey jack cheese'
 ]
 

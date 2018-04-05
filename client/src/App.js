@@ -19,7 +19,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    document.title = "FOOD-ME"
+    document.title = "Kitchen Slate"
     this.state = { user: [] }
 
 
