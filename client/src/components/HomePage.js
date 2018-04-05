@@ -41,12 +41,12 @@ class HomePage extends Component {
     const { onSignIn = () => {} } = this.props;
     Token.create(logInParams)
       .then(data => {
-        if (!data.errors) {
+        if (data) {
           // localStorage.setItem('jwt', data.jwt);
           localStorage.setItem('user', data.id );
           this.setState({ form: "signOut" });
           onSignIn()
-          this.props.history.push(`/ingredients`);
+          this.props.history.push('/ingredients')
         } else {
           this.setState({
             errors: [{
@@ -61,13 +61,12 @@ class HomePage extends Component {
     const { onSignIn = () => {} } = this.props;
     User.create(signUpParams)
       .then(data => {
-        if (!data.errors) {
-          console.log("In if block");
+        if (data) {
           // localStorage.setItem('jwt', data.jwt);
           localStorage.setItem('user', data.id );
           this.setState({ form: "signOut" })
           onSignIn()
-          this.props.history.push(`/ingredients`);
+          this.props.history.push('/ingredients')
         } else {
           this.setState({
             errors: [{
@@ -115,10 +114,14 @@ class HomePage extends Component {
           <Jumbotron
             id="signin-jumbotron"
           >
-            <h1 className="display-3 homeTitle">FOOD-ME</h1>
-            <p>Already Have Something In Mind?</p>
-            <RecipeSearch id="homeSearchBar" placeHoldText="Search for any dish.."/>
-            <hr/>
+            {
+              form === "signOut"
+              ?
+              <h1 className="display-4"><Link to="/ingredients" id="homeTitle" style={{ textDecoration: 'none' }}>KITCHEN SLATE</Link></h1>
+              :
+              <h1 className="display-4"><Link to="/" id="homeTitle" style={{ textDecoration: 'none' }}>KITCHEN SLATE</Link></h1>
+            }
+
             {
               form === "signIn" || form === "signUp"
               ?
@@ -128,18 +131,8 @@ class HomePage extends Component {
             }
             { form === "signIn" ? <SignIn signUpClick={this.toSignUp} onSubmit={this.createToken} /> : null }
             { form === "signUp" ? <SignUp signInClick={this.toSignIn} onSubmit={this.createUser} /> : null }
-            { form === "signOut" ? <Button onClick={this.toSignOut}>Sign Out</Button> : null }
-            {
-              form === "signOut"
-              ?
-              <div>
-                <Link to="/ingredients">Your Ingredients</Link><br/>
-                <Link to="/saved">Saved Recipes</Link><br/>
-                <Link to="/recipes">View Recipes</Link><br/>
-              </div>
-              :
-              null
-            }
+            { form === "signOut" ? <div><Button className="btn-dark" onClick={this.toSignOut}>Sign Out</Button></div> : null }
+
           </Jumbotron>
         </div>
       </main>

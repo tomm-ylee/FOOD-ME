@@ -1,6 +1,9 @@
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap'
+import { Row, Col, Button, Collapse } from 'reactstrap'
 import { Ingredient, User, Ownage, ToBuy } from '../lib/requests';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faShoppingCart from '@fortawesome/fontawesome-free-solid/faShoppingCart'
+import faList from '@fortawesome/fontawesome-free-solid/faList'
 
 import MultiSelectField from './MultiSelectField';
 import DefaultPrompt from './DefaultPrompt';
@@ -29,6 +32,8 @@ class UserIngredientsPage extends React.Component {
     this.xLeave = this.xLeave.bind(this)
 
     this.toggleDefaultPop = this.toggleDefaultPop.bind(this)
+    this.toggleMultiShop = this.toggleMultiShop.bind(this)
+    this.toggleMultiYours = this.toggleMultiYours.bind(this)
 
     this.updateFieldValueShop = this.updateFieldValueShop.bind(this)
     this.addIngredientsShop = this.addIngredientsShop.bind(this)
@@ -109,6 +114,20 @@ class UserIngredientsPage extends React.Component {
     this.setState({ defaultPop:!this.state.defaultPop })
   }
 
+  toggleMultiShop(event) {
+    event.preventDefault();
+    document.querySelectorAll(".shoppingHide").forEach(node => {
+      node.classList.toggle('hidden')
+    })
+  }
+
+  toggleMultiYours(event) {
+    event.preventDefault();
+    document.querySelectorAll(".yoursHide").forEach(node => {
+      node.classList.toggle('hidden')
+    })
+  }
+
   render() {
     const { loading, user, fieldValue, fieldValueShop, ingredients, ownages, to_buys, defaultPop } = this.state
 
@@ -125,27 +144,32 @@ class UserIngredientsPage extends React.Component {
         <main className="UserIngredientsPage">
           <div className="backgroundDiv">
             <div className="content">
-              <h1 className="centerHeader">{user.username}'s ingredients</h1>
-              <Row>
-                <Col>
+              <div className="niceHeaderDiv">
+                <h1 className="niceHeader padLeft">Ingredient Management</h1>
+              </div>
+              <Row className="overallUserSection ownIngredientSection">
+                <Col className="yoursHide" md="4">
                   <Row className="userPageSection">
-                    <h3 className="centerHeader"> Find Your Ingredients: </h3>
                     <MultiSelectField
                       ingredients={ingredients}
                       value={fieldValue}
                       onSelectChange={this.updateFieldValue}
                       onSelectSubmit={this.addIngredients}
+                      header="Add to Your Ingredients:"
                     />
                   </Row>
 
                 </Col>
-                <Col>
-                  <h3 className="centerHeader"> See Your Ingredients: </h3>
+                <Col md="7">
+                  <h2 className="centerHeader">
+                    {`Your Ingredients (${ownages.length}) `}
+                    <a href='/' onClick={this.toggleMultiYours} style={{ textDecoration: 'none' }}><FontAwesomeIcon icon={faList}/></a>
+                  </h2>
                   {
                     ownages.length === 0
                     ?
-                    <p>
-                      {`Tell us what you have!  `}
+                    <p className="normalText">
+                      {`No ingredients added yet.  `}
                       <DefaultPrompt
                         basics={ingredients.basics}
                         defaultPop={defaultPop}
@@ -156,10 +180,10 @@ class UserIngredientsPage extends React.Component {
                     :
                     null
                   }
-                  <div className="userIngredientList">
+                  <div className="userIngredientList yoursHide">
                     {
                       ownages.map((ownage, i) => (
-                        <Button key={ownage.id} data-id={ownage.id} className="ingredientButton">
+                        <Button key={ownage.id} data-id={ownage.id} className="ingredientButton" size="lg">
                           <small
                             data-id={ownage.id}
                             onClick={this.xClick}
@@ -175,26 +199,28 @@ class UserIngredientsPage extends React.Component {
                   </div>
                 </Col>
               </Row>
-              <Row>
-                <Col>
+              <Row className="overallUserSection">
+                <Col className="shoppingHide hidden" md="4">
                   <Row className="userPageSection">
-                    <h3 className="centerHeader"> Add to Shopping List: </h3>
                     <MultiSelectField
                       ingredients={ingredients}
                       value={fieldValueShop}
                       onSelectChange={this.updateFieldValueShop}
                       onSelectSubmit={this.addIngredientsShop}
+                      header="Add to Shopping List:"
                     />
                   </Row>
-
                 </Col>
-                <Col>
-                  <h3 className="centerHeader"> Shopping List: </h3>
-                  { to_buys.length === 0 ? <p>Tell us what you want!</p> : null }
-                  <div className="userIngredientList">
+                <Col md="7">
+                  <h2 className="centerHeader">
+                    {`Shopping List (${to_buys.length}) `}
+                    <a href='/' onClick={this.toggleMultiShop} style={{ textDecoration: 'none' }}><FontAwesomeIcon icon={faShoppingCart}/></a>
+                  </h2>
+                  { to_buys.length === 0 ? <p  className="normalText">No ingredients added yet.</p> : null }
+                  <div className="userIngredientList shoppingHide hidden">
                     {
                       to_buys.map((to_buy, i) => (
-                        <Button key={to_buy.id} data-id={to_buy.id} className="ingredientButton toBuy">
+                        <Button key={to_buy.id} data-id={to_buy.id} className="ingredientButton toBuy" size="lg">
                           <small
                             data-id={to_buy.id}
                             onClick={this.xClickShop}

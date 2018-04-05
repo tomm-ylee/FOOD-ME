@@ -2,15 +2,11 @@ const express = require('express');
 const unirest = require('unirest');
 const knex = require('../db/knex');
 const router = express.Router();
-
+const { API_DOMAIN, API_KEY } = require('../key')
 const { indexSnap, searchSnap, showSnap } = require('../assets/apiSearches')
 
-
-API_DOMAIN = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes"
-API_KEY = "Q1iCBBTOU9mshgVeyedEPiiWw2wpp1kYy7YjsnHkC4SHBJ7kds";
-
 // PATH: /recipes/search/:searchPhrase/:page/:diet/:user_id ACTION: SEARCH
-// router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next) {res.json(searchSnap)})
+router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next) {res.json(searchSnap)})
 router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next) {
   const { searchPhrase, page, diet, user_id } = req.params
   const perPage = 9

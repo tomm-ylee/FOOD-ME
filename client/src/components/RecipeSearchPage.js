@@ -137,12 +137,12 @@ class RecipeSearchPage extends React.Component {
         <main className="RecipeSearchPage">
           <div className="backgroundDiv">
             <div className="content">
-              <div>
+              {/* <div>
                 <input type="checkbox" id="veganCheckbox" checked={diet === "vegan" ? "checked" : ""} onClick={this.toggleVegan}/>
                 <label htmlFor="veganCheckbox">Vegan</label>
                 <input type="checkbox" id="vegetarianCheckbox" checked={diet === "vegetarian" ? "checked" : ""} onClick={this.toggleVegetarian}/>
                 <label htmlFor="vegetarianCheckbox">Vegetarian</label>
-              </div>
+              </div> */}
               <div className="recipeCardList">
               {
                 this.state.recipes.map(

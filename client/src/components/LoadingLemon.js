@@ -1,33 +1,24 @@
 import React from 'react'
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
-import faLemon from '@fortawesome/fontawesome-free-solid/faLemon'
+import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
 
 function LoadingLemon() {
   const toggleFruit = () => {
-    return new Promise (resolve => {
-      setTimeout(() => {
-        const fruit = document.querySelector("div.contentLemon")
-        if (fruit) fruit.classList.toggle("lime");
-        resolve();
-      }, 1000)
-    })
+    setTimeout(() => {
+      const fruit = document.querySelector("div.contentLemon")
+      if (fruit) {
+        fruit.classList.toggle("lime");
+        toggleFruit()
+      }
+    }, 1500)
   }
 
   toggleFruit()
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
-  .then(() => toggleFruit())
+
 
   return (
     <div className='contentLemon'>
-      <FontAwesomeIcon icon={faLemon} size="2x" />
+      <FontAwesomeIcon icon={faSpinner} size="2x" />
     </div>
   );
 }

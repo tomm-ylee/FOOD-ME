@@ -171,7 +171,7 @@ class RecommendedRecipesPage extends React.Component {
                           <small id={`used-${i}`} data-id={`used-${i}`} onMouseEnter={this.popIn} onMouseLeave={this.popOut}>
                             Used Ingredients: {recipe.usedIngredientCount}
                           </small><br/>
-                          <Popover placement="right" isOpen={popState[`used-${i}`]} target={`used-${i}`} toggle={this.toggle}>
+                          <Popover className="popover" placement="right" isOpen={popState[`used-${i}`]} target={`used-${i}`} toggle={this.toggle}>
                             <PopoverBody className="usedIngredients">{recipe.usedIngredients.join(', ')}</PopoverBody>
                           </Popover>
                         </div>
@@ -185,10 +185,10 @@ class RecommendedRecipesPage extends React.Component {
                             </a></small>
                           </div>
                           <br/>
-                          <Popover className="missedIngredients" placement="right" isOpen={popState[`missed-${i}`]} target={`missed-${i}`} toggle={this.toggle}>
+                          <Popover className="missedIngredients popover" placement="right" isOpen={popState[`missed-${i}`]} target={`missed-${i}`} toggle={this.toggle}>
                             <PopoverBody>{recipe.missedIngredients.join(', ')}</PopoverBody>
                           </Popover>
-                          <Popover className="addFinished" placement="bottom" isOpen={popState[`added-${i}`]} target={`added-${i}`} toggle={this.toggle}>
+                          <Popover className="addFinished popover" placement="bottom" isOpen={popState[`added-${i}`]} target={`added-${i}`} toggle={this.toggle}>
                             <PopoverBody>Added</PopoverBody>
                           </Popover>
                         </div>

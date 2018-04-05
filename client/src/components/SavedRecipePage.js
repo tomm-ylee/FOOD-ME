@@ -84,9 +84,9 @@ class SavedRecipePage extends React.Component {
   }
 
   updatePopstate(params) {
-    const { favourite_id, setTo } = params
+    const { id, setTo } = params
     const { popState } = this.state
-    popState[favourite_id] = setTo
+    popState[id] = setTo
 
     this.setState({ popState: popState })
   }
@@ -107,15 +107,28 @@ class SavedRecipePage extends React.Component {
         <main className="SavedRecipePage">
           <div className="backgroundDiv">
             <div className="content">
-              <Button className={`${view === "1" ? "btn-dark" : "btn-outline-dark"} savedRecipeButton`} data-view="1" onClick={this.changeView}>
+              <Button className={`${view === "1" ? "btn-dark viewOn" : "btn-outline-dark viewOff"} savedRecipeButton padLeft`} data-view="1" onClick={this.changeView}>
                 Starred
               </Button>
 
-              <Button className={`${view === "2" ? "btn-dark" : "btn-outline-dark"} savedRecipeButton`} data-view="2" onClick={this.changeView}>
+              <Button className={`${view === "2" ? "btn-dark viewOn" : "btn-outline-dark viewOff"} savedRecipeButton`} data-view="2" onClick={this.changeView}>
                 Completed
               </Button>
-              { view === "1" ? <FavouriteRecipes popState={popState} goSeeRecipe={this.seeRecipe} goUnfavourite={this.destroyFavourite} goTogglePop={this.updatePopstate} favourites={favourites}/> : null }
-              { view === "2" ? <CompletedRecipes goSeeRecipe={this.seeRecipe} goUncomplete={this.destroyComplete} goRecomplete={this.updateComplete} completes={completes}/> : null }
+              { view === "1" ? <FavouriteRecipes
+                                favourites={favourites}
+                                popState={popState}
+                                goSeeRecipe={this.seeRecipe}
+                                goUnfavourite={this.destroyFavourite}
+                                goTogglePop={this.updatePopstate}
+                              /> : null }
+              { view === "2" ? <CompletedRecipes
+                                completes={completes}
+                                popState={popState}
+                                goSeeRecipe={this.seeRecipe}
+                                goUncomplete={this.destroyComplete}
+                                goRecomplete={this.updateComplete}
+                                goTogglePop={this.updatePopstate}
+                              /> : null }
             </div>
           </div>
         </main>

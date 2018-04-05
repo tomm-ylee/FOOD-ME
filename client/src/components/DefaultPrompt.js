@@ -3,9 +3,10 @@ import { Popover, PopoverBody } from 'reactstrap'
 
 function DefaultPrompt(props) {
   const { defaultPop, basics = [], goToggleDefaultPop = () => {}, goAddDefaults = () => {} } = props
-  
+
   const addDefaults = event => {
     event.preventDefault();
+    goToggleDefaultPop()
     goAddDefaults({ value: basics })
   }
   const toggleDefaultPop = () => {

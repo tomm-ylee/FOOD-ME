@@ -16,7 +16,7 @@ function SignUp(props) {
     }
   return (
     <Form onSubmit={handleSubmit}>
-      <Link className="signButton" to='' onClick={props.signInClick}>Sign In</Link> <Button>Sign Up</Button>  <br/>
+      <Link className="signButton" to='' onClick={props.signInClick}>Sign In</Link> <Button className="btn-dark">Sign Up</Button>  <br/>
       <FormGroup>
         <Label for='username'>Username</Label> <br />
         <input type='input' id='username' name='username'/>
@@ -31,12 +31,6 @@ function SignUp(props) {
         <Label for='password'>Password</Label> <br />
         <input type='password' id='password' name='password' />
       </FormGroup>
-
-      <FormGroup>
-        <Label for='password_confirmation'>Password Confirmation</Label> <br />
-        <input type='password' id='password_confirmation' name='password_confirmation' />
-      </FormGroup>
-
     </Form>
   )
 }
