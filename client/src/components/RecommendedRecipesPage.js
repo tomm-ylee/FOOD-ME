@@ -4,6 +4,7 @@ import { Recipe, Favourite, Complete, ToBuy } from '../lib/requests';
 
 import PageNumber from './PageNumber.js'
 import FavouriteButtons from './FavouriteButtons.js'
+import LoadingLemon from './LoadingLemon.js'
 
 class RecommendedRecipesPage extends React.Component {
   constructor (props) {
@@ -136,19 +137,16 @@ class RecommendedRecipesPage extends React.Component {
   render() {
     if (this.state.loading) {
       return (
-        <main
-          className="RecommendedRecipesPage"
-          style={{margin: '0 1rem'}}
-        >
-          <p>loading..</p>
+        <main className="RecommendedRecipesPage">
+          <div className="backgroundDiv">
+            <LoadingLemon />
+          </div>
         </main>
       )
     } else {
       const { page, recipes, popState } = this.state
       return (
-        <main
-          className="RecommendedRecipesPage"
-        >
+        <main className="RecommendedRecipesPage">
           <div className="backgroundDiv">
             <div className="content">
               <div className="recipeCardList">
@@ -173,7 +171,7 @@ class RecommendedRecipesPage extends React.Component {
                           <small id={`used-${i}`} data-id={`used-${i}`} onMouseEnter={this.popIn} onMouseLeave={this.popOut}>
                             Used Ingredients: {recipe.usedIngredientCount}
                           </small><br/>
-                          <Popover placement="right" isOpen={popState[`used-${i}`]} target={`used-${i}`} toggle={this.toggle}>
+                          <Popover className="popover" placement="right" isOpen={popState[`used-${i}`]} target={`used-${i}`} toggle={this.toggle}>
                             <PopoverBody className="usedIngredients">{recipe.usedIngredients.join(', ')}</PopoverBody>
                           </Popover>
                         </div>
@@ -187,10 +185,10 @@ class RecommendedRecipesPage extends React.Component {
                             </a></small>
                           </div>
                           <br/>
-                          <Popover className="missedIngredients" placement="right" isOpen={popState[`missed-${i}`]} target={`missed-${i}`} toggle={this.toggle}>
+                          <Popover className="missedIngredients popover" placement="right" isOpen={popState[`missed-${i}`]} target={`missed-${i}`} toggle={this.toggle}>
                             <PopoverBody>{recipe.missedIngredients.join(', ')}</PopoverBody>
                           </Popover>
-                          <Popover className="addFinished" placement="bottom" isOpen={popState[`added-${i}`]} target={`added-${i}`} toggle={this.toggle}>
+                          <Popover className="addFinished popover" placement="bottom" isOpen={popState[`added-${i}`]} target={`added-${i}`} toggle={this.toggle}>
                             <PopoverBody>Added</PopoverBody>
                           </Popover>
                         </div>

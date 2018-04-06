@@ -19,7 +19,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    document.title = "FOOD-ME"
+    document.title = "Kitchen Slate"
     this.state = { user: [] }
 
 
@@ -57,6 +57,7 @@ class App extends Component {
   render() {
     const { user } = this.state
     return (
+      <div className="appBackgroundDiv">
       <Router>
         <div className="App">
           <NavBar user={user} />
@@ -82,6 +83,7 @@ class App extends Component {
           </Switch>
         </div>
       </Router>
+    </div>
     );
   }
 }

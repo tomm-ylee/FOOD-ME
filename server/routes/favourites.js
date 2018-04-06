@@ -5,7 +5,7 @@ const router = express.Router();
 // PATH: /favourites/:user_id ACTION: INDEX
 router.get('/:user_id', function(req, res, next) {
   const { user_id } = req.params
-  knex.select().from('favourites').where({ user_id }).orderBy('recipe_title', 'ASC').then(favourites => {
+  knex.select().from('favourites').where({ user_id }).orderBy('created_at', 'DESC').then(favourites => {
     res.json(favourites);
   })
 });

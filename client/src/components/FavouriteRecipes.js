@@ -17,30 +17,39 @@ function FavouriteRecipes(props) {
 
   const togglePopOn = event => {
     const { favourite_id } = event.currentTarget.dataset;
-    const setTo = true;
-    goTogglePop({ favourite_id, setTo });
+    goTogglePop({ id: favourite_id, setTo: true });
   }
 
   const togglePopOff = event => {
     const { favourite_id } = event.currentTarget.dataset;
-    const setTo = false;
-    goTogglePop({ favourite_id, setTo });
+    goTogglePop({ id: favourite_id, setTo: false });
   }
 
   const toggle = () => {}
 
   return (
     <div>
-      <h1 className="centerHeader">Starred Recipes</h1>
+      <div className="niceHeaderDiv">
+        <h1 className="niceHeader padLeft">Starred Recipes</h1>
+      </div>
       <div className="recipeCardList savedRecipes flexContainer">
         {
           favourites.map(favourite => (
             <div key={favourite.id}>
-              <Card className="recipeCard" data-recipe_id={favourite.recipe_id} onClick={seeRecipe}>
+              <Card className="recipeCard" data-recipe_id={favourite.recipe_id} onClick={seeRecipe} onMouseEnter={toggle} onMouseLeave={toggle}>
                 <CardImg top width="100%" src={favourite.image} />
                 <CardImgOverlay className="flexContainer cardOverlay">
                   <div>
-                    <FontAwesome id={`remove-${favourite.id}`} onMouseEnter={togglePopOn} onMouseLeave={togglePopOff} data-favourite_id={favourite.id} onClick={unfavouriteThis} name="star"/>
+                    <FontAwesome
+                      id={`remove-${favourite.id}`}
+                      className="goldFa"
+                      onMouseEnter={togglePopOn}
+                      onMouseLeave={togglePopOff}
+                      data-favourite_id={favourite.id}
+                      onClick={unfavouriteThis}
+                      name="star"
+                      size="2x"
+                    />
                   </div>
                   <CardTitle className="recipeTitle"><p>{favourite.recipe_title}</p></CardTitle>
                 </CardImgOverlay>

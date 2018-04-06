@@ -5,7 +5,7 @@ import { Form, Button } from 'reactstrap'
 
 
 function MultiSelectField(props) {
-  const { value, ingredients, onSelectChange, onSelectSubmit } = props
+  const { value, ingredients, header, onSelectChange, onSelectSubmit } = props
 
   const options = []
   for(let foodGroup in ingredients) {
@@ -25,20 +25,21 @@ function MultiSelectField(props) {
   }
 
   return (
-  	<div className="section">
+  	<div className="multiSelectSection">
+      <h4>{header}</h4>
       <Form onSubmit={handleSubmit}>
     		<Select
-          id="ingredientMulti"
+          className="ingredientMulti"
     			multi
     			onChange={onSelectChange}
     			options={options}
-    			placeholder="Add your ingredients..."
+    			placeholder="Type the ingredients..."
           removeSelected={true}
     			simpleValue
     			value={value}
           name="ingredient"
     		/>
-        <Button className="multiSelectButton">Add Ingredients</Button>
+        <Button className="btn-outline-dark multiSelectButton">Add Ingredients</Button>
       </Form>
   	</div>
   );

@@ -8,6 +8,7 @@
     "db:drop": "drop --echo --if-exists meal_planner_dev"
   },
   "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.0.18",
     "body-parser": "^1.18.2",
     "colors": "^1.2.1",
     "cookie-parser": "~1.4.3",

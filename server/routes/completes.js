@@ -5,7 +5,7 @@ const router = express.Router();
 // PATH: /completes/:user_id ACTION: INDEX
 router.get('/:user_id', function(req, res, next) {
   const { user_id } = req.params
-  knex.select().from('completes').where({ user_id }).orderBy('recipe_title', 'ASC').then(completes => {
+  knex.select().from('completes').where({ user_id }).orderBy('created_at', 'DESC').then(completes => {
     res.json(completes);
   })
 });

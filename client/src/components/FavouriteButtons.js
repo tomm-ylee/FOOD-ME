@@ -41,16 +41,16 @@ function FavouriteButtons(props) {
       {
         recipe.favourite_id
         ?
-        <FontAwesome data-favourite_id={recipe.favourite_id} onClick={unfavouriteThis} name="star"/>
+        <FontAwesome className="goldFa" data-favourite_id={recipe.favourite_id} onClick={unfavouriteThis} name="star" size="2x"/>
         :
-        <FontAwesome onClick={favouriteThis} name="star-o"/>
+        <FontAwesome onClick={favouriteThis} name="star-o" size="2x"/>
       }
       {
         recipe.complete_id
         ?
-        <FontAwesome data-complete_id={recipe.complete_id} onClick={uncompleteThis} name="check-circle"/>
+        <FontAwesome className="grayFa" data-complete_id={recipe.complete_id} onClick={uncompleteThis} name="check" size="2x"/>
         :
-        <FontAwesome onClick={completeThis} name="check-circle-o"/>
+        <FontAwesome onClick={completeThis} name="check" size="2x"/>
       }
     </CardTitle>
   )
