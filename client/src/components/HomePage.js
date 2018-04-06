@@ -39,7 +39,8 @@ class HomePage extends Component {
 
   createToken(logInParams) {
     const { onSignIn = () => {} } = this.props;
-    Token.create(logInParams)
+    if (logInParams.email) {
+      Token.create(logInParams)
       .then(data => {
         if (data) {
           // localStorage.setItem('jwt', data.jwt);
@@ -55,11 +56,13 @@ class HomePage extends Component {
           })
         }
       })
+    }
   }
 
   createUser(signUpParams) {
     const { onSignIn = () => {} } = this.props;
-    User.create(signUpParams)
+    if (signUpParams.email) {
+      User.create(signUpParams)
       .then(data => {
         if (data) {
           // localStorage.setItem('jwt', data.jwt);
@@ -75,6 +78,7 @@ class HomePage extends Component {
           })
         }
       })
+    }
   }
 
   makeGuest(event) {

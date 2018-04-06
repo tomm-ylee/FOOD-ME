@@ -6,14 +6,13 @@ const { API_DOMAIN, API_KEY } = require('../key')
 const { indexSnap, searchSnap, showSnap } = require('../assets/apiSearches')
 
 // PATH: /recipes/search/:searchPhrase/:page/:diet/:user_id ACTION: SEARCH
-// router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next) {res.json(searchSnap)})
 router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next) {
   const { searchPhrase, page, diet, user_id } = req.params
   const perPage = 9
   const offset = (page - 1) * perPage
 
   const searchURL = `${API_DOMAIN}/searchComplex?number=${perPage}&offset=${offset}&query=${searchPhrase}`
-  console.log(searchURL);
+
   unirest.get(searchURL)
     .header("X-Mashape-Key", API_KEY)
     .header("X-Mashape-Host", "spoonacular-recipe-food-nutrition-v1.p.mashape.com")
@@ -42,7 +41,6 @@ router.get('/search/:searchPhrase/:page/:diet/:user_id', function(req, res, next
 });
 
 // PATH: /recipes/:user_id/:page ACTION: INDEX RECIPES
-// router.get('/:user_id/:page', function(req, res, next) {res.json(indexSnap)})
 router.get('/:user_id/:page', function(req, res, next) {
   const { user_id, page} = req.params
   const numOfPages = 3
@@ -102,7 +100,6 @@ router.get('/:user_id/:page', function(req, res, next) {
 });
 
 // PATH: /recipes/:id ACTION: SHOW
-// router.get('/:id', function(req, res, next) {res.json(showSnap)})
 router.get('/:id', function(req, res, next) {
   const recipeId = req.params.id;
 
