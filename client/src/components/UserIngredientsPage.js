@@ -183,7 +183,11 @@ class UserIngredientsPage extends React.Component {
                   <div className="userIngredientList yoursHide">
                     {
                       ownages.map((ownage, i) => (
-                        <Button key={ownage.id} data-id={ownage.id} className="ingredientButton" size="lg">
+                        <Button
+                          key={ownage.id}
+                          data-id={ownage.id}
+                          className="ingredientButton" 
+                          size="lg">
                           <small
                             data-id={ownage.id}
                             onClick={this.xClick}
