@@ -1,5 +1,443 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+* {
+  box-sizing: content-box;
+  font-family: "Roboto";
+}
+
+.flexContainer {
+  display: flex;
+}
+
+.btn {
+  border-radius: 2px;
+}
+
+h1 a#homeTitle {
+  color: #00422E;
+  font-size: 50pt;
+  font-weight: bold;
+  font-family: "Fjalla One";
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+}
+
+main.HomePage > .backgroundDiv {
+  display: flex;
+  padding: none;
+  background-image: url('./images/cropped-food-background.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  justify-content: flex-end;
+  min-height: 100vh;
+}
+
+#signin-jumbotron {
+  display: flex;
+  flex-direction: column;
+  margin: 100px;
+  width: 485px;
+  height: 300px;
+  border-radius: 15px;
+}
+
+#signin-jumbotron .btn-dark {
+  background-color: rgba(0,100,70)
+}
+
+#signin-jumbotron a {
+  /* color: rgba(0,100,70) */
+}
+
+#navTitle {
+  font-size: 20pt;
+  font-family: "Fjalla One";
+  margin: auto 0px auto 20px;
+}
+
+.NavBar {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: #00422E;
+  height: 80px;
+  margin: 0px 200px;
+}
+
+.NavBar > * {
+  padding: 0.50em 1em;
+  color: inherit;
+  text-decoration: none;
+}
+
+.NavBar > *:first-child {
+  margin-right: auto
+}
+
+#navSearchBar {
+  margin-right: 25px;
+}
+
+#homeSearch {
+  margin-bottom: 200px;
+}
+
+.recipeCardList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.recipeCard {
+  max-width: 450px;
+  margin: 15px;
+  border: none;
+  box-shadow: 4px 4px grey;
+}
+
+.ingredientsIndicators {
+  max-width: 450px;
+  margin: -15px 15px 0px 15px;
+  border: none;
+}
+
+.ingredientsIndicators small {
+  font-size: 14pt;
+}
+
+.recipeCard img {
+  width: 450px;
+  height: auto
+}
+
+.ingredientItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.ingredientItems > .quantity{
+  width: 2em;
+}
+
+.ingredientItems > .unit{
+  width: 8em;
+}
+
+.appBackgroundDiv {
+  background-image: url('./images/content_background.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: 0;
+}
+
+.content {
+  background-color: white;
+  margin: 0 200px;
+  padding: 20px;
+  min-height: 89vh;
+}
+
+.contentLemon {
+  margin: 0 200px;
+  padding: 20px;
+  color: white;
+  transition: all 1.5s;
+}
+
+.contentLemon.lime {
+  color: rgba(0,100,70,0.9);
+}
+
+.recipeImage {
+  max-width: 100%;
+  height: auto;
+}
+
+form input, textarea, .ratingInput {
+  width: 100%;
+  border-radius: 4px;
+  border-style: inset;
+  border-width: 2px;
+  resize: none;
+}
+
+a {
+  color: #282828;
+}
+
+.showHeader {
+  margin-top: 50px;
+}
+
+div.Select-menu {
+  /* max-height: 250px; */
+}
+
+.ingredientButton.btn {
+  margin: 5px;
+  background-color: unset;
+  color: black;
+  border-color: #246600;
+  border-radius: 3px;
+}
+
+.ingredientButton.toBuy.btn {
+  background-color: unset;
+  color: black;
+  border-color: #03254C;
+  border-radius: 3px;
+}
+
+.ingredientButton.btn:hover {
+  background-color: white;
+}
+
+.userHeader {
+  margin: 20px;
+}
+
+.ownIngredientSection {
+  height: 300px;
+  border-bottom: 1px solid #006446;
+}
+
+.overallUserSection {
+  padding: 20px;
+  margin: 20px;
+}
+
+.multiSelectSection {
+  background-color: rgba(0,100,70);
+  padding: 25px;
+  border-radius: 6px;
+}
+
+.multiSelectSection h4 {
+  color: white;
+  margin-left: 10px;
+}
+
+.multiSelectButton {
+  margin-top: 10px;
+  background-color: white;
+  color: #00422E;
+}
+
+.viewOn {
+  background-color: rgba(0,100,70);
+  border-color: rgba(0,100,70);
+}
+
+.viewOff {
+  border-color: rgba(0,100,70);
+}
+
+.hoverX {
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
+
+.form-group {
+  margin: 0;
+}
+
+.pageNumber {
+  flex-direction: column;
+  align-items: center;
+}
+
+.pageNumber > p {
+  margin: 0px
+}
+
+.card-img-overlay.cardOverlay {
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.cardOverlay > .favouriteButtons {
+padding: 4px;
+}
+
+.favouriteButtonBorder {
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 20px;
+  padding: 3px;
+  margin-right: 5px;
+  width: 60px;
+  height: 30px;
+}
+
+.cardOverlay > .recipeTitle {
+  height: 65px;
+  margin: 0;
+  padding: 10px;
+  background-color: rgba(0,100,70,0.8)
+}
+
+.cardOverlay > .recipeTitle p {
+  font-size: 20pt;
+  color: #DFF1EC;
+  margin-bottom: 0px;
+}
+
+.usedIngredients {
+  color: green;
+}
+
+.missedIngredients * {
+  color: maroon;
+}
+
+#vegetarianCheckbox {
+  margin-left: 20px;
+}
+
+.userPageSection {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.completedRecipes.flexContainer {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.favouriteItem, .completeItem {
+  border-bottom: 1px solid #006446;
+  margin: 0px;
+  padding: 30px 50px;
+}
+
+.completeItem a {
+  font-size: 30px;
+}
+
+.recipeCard.completed {
+  height: 200px;
+  width: auto;
+  margin-right: 10px;
+  border: 5px solid rgba(0,100,70,0.8);
+  cursor: pointer;
+  box-shadow: 2px 2px grey;
+}
+
+.recipeCard.completed img{
+  height: 200px;
+  width: auto;
+}
+
+.notesTextarea {
+  margin: 10px 0px;
+  height: 100px;
+  width: calc(100vw - 900px) ;
+}
+
+.noteDiv {
+  margin: 12px;
+}
+
+.savedRecipes button {
+  font-size: 14pt;
+  padding: 4px;
+  background-color: rgba(0,100,70);
+  border-color: rgba(0,100,70);
+  border-radius: 2px;
+}
+
+.missed {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.signButton {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.popover {
+  font-size: 16pt;
+}
+
+.fa {
+  color: #DFF1EC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  margin: 6px 0 0 4px;
+  border-radius: 100px;
+  background-color: rgba(0,100,70,0.6);
+}
+
+.card:hover {
+  position:relative;
+  top:-2px;
+  left:-2px;
+  box-shadow: 5px 5px grey;
+  display:block;
+  z-index:999;
+}
+
+.savedImg:hover {
+  position:relative;
+  top:-2px;
+  left:-2px;
+  box-shadow: 5px 5px grey;
+  display:block;
+  z-index:999;
+}
+
+.card {
+  cursor: pointer;
+}
+
+.goldFa {
+  background-color: rgba(255,215,0,0.6);
+}
+
+.grayFa {
+  background-color: rgba(60,60,60,0.7);
+}
+
+.favouriteButtons .fa:not(.grayFa):not(.goldFa):hover {
+  background-color: rgba(0,100,70,0.8);
+}
+
+.fa.goldFa:hover {
+  background-color: rgba(255,215,0,9);
+}
+
+.fa.grayFa:hover {
+  background-color: rgba(40,40,40,0.7);
+}
+
+h2 .fa-shopping-cart, .fa-list {
+  font-size: 18pt;
+}
+
+.shoppingHide, .yoursHide {
+  transition: all 2s;
+}
+
+.padLeft {
+  margin-left: 40px;
+}
+
+.niceHeader {
+  color: black;
 }
